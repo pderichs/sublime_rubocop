@@ -1,62 +1,62 @@
 [
-    {
-        "caption": "Preferences: Rubocop Key Bindings – Default",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/sublime_rubocop/Default (Windows).sublime-keymap",
-            "platform": "Windows"
-        }
-    },
-    {
-        "caption": "Preferences: Rubocop Key Bindings – Default",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/sublime_rubocop/Default (OSX).sublime-keymap",
-            "platform": "OSX"
-        }
-    },
-    {
-        "caption": "Preferences: Rubocop Key Bindings – Default",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/sublime_rubocop/Default (Linux).sublime-keymap",
-            "platform": "Linux"
-        }
-    },
-    {
-        "caption": "Preferences: Rubocop Key Bindings – User",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/User/Default (Windows).sublime-keymap",
-            "platform": "Windows"
-        }
-    },
-    {
-        "caption": "Preferences: Rubocop Key Bindings – User",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/User/Default (OSX).sublime-keymap",
-            "platform": "OSX"
-        }
-    },
-    {
-        "caption": "Preferences: Rubocop Key Bindings – User",
-        "command": "open_file",
-        "args": {
-            "file": "${packages}/User/Default (Linux).sublime-keymap",
-            "platform": "Linux"
-        }
-    },
-    {
-        "caption": "RuboCop: Check current file",
-        "command": "rubocop_check_single_file"
-    },
-    {
-        "caption": "RuboCop: Check current project",
-        "command": "rubocop_check_project"
-    },
-    {
-        "caption": "RuboCop: Check folder of current file",
-        "command": "rubocop_check_file_folder"
+  {
+    "caption": "Preferences: Rubocop Key Bindings – Default",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/sublime_rubocop/Default (Windows).sublime-keymap",
+      "platform": "Windows"
     }
+  },
+  {
+    "caption": "Preferences: Rubocop Key Bindings – Default",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/sublime_rubocop/Default (OSX).sublime-keymap",
+      "platform": "OSX"
+    }
+  },
+  {
+    "caption": "Preferences: Rubocop Key Bindings – Default",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/sublime_rubocop/Default (Linux).sublime-keymap",
+      "platform": "Linux"
+    }
+  },
+  {
+    "caption": "Preferences: Rubocop Key Bindings – User",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/User/Default (Windows).sublime-keymap",
+      "platform": "Windows"
+    }
+  },
+  {
+    "caption": "Preferences: Rubocop Key Bindings – User",
+    "command": "open_file",
+    "args": {
+      "file": "${packages}/User/Default (OSX).sublime-keymap",
+      "platform": "OSX"
+    }
+  },
+  {
+    "caption": "Preferences: Rubocop Key Bindings – User",
+    "command": "open_file",
+    "args": {
+    "file": "${packages}/User/Default (Linux).sublime-keymap",
+    "platform": "Linux"
+    }
+  },
+  {
+    "caption": "RuboCop: Check current file",
+    "command": "rubocop_check_single_file"
+  },
+  {
+    "caption": "RuboCop: Check current project",
+    "command": "rubocop_check_project"
+  },
+  {
+    "caption": "RuboCop: Check folder of current file",
+    "command": "rubocop_check_file_folder"
+  }
 ]
