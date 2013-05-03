@@ -1,4 +1,4 @@
-= Sublime Rubocop
+== Sublime Rubocop
 
 A Sublime Text 2 plugin that runs a Rubocop check on the current file. It uses
 RVM to detect the rubocop script.
