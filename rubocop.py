@@ -3,10 +3,10 @@
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
  
-import sublime
 import sublime_plugin
-import os
+import sublime
 import pipes
+import os
 
 class RubocopCommand(sublime_plugin.TextCommand):
   def run(self, edit):
