@@ -1,0 +1,3 @@
+[
+	{ "keys": ["ctrl+super+c"], "command": "rubocop" }
+]
