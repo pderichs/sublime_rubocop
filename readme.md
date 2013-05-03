@@ -9,7 +9,7 @@ Enjoy!
 
 1. Navigate to the Sublime Text 2 Packages folder (on Mac OS X it can be found here: `$HOME/Library/Application Support/Sublime Text 2/Packages`)
 
-2. Run the git clone command right inside the packages directory.
+2. Run the git clone command right inside the packages directory: `git clone git@github.com:pderichs/sublime_rubocop.git`
 
 3. Restart Sublime Text 2.
 
