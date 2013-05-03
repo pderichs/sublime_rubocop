@@ -48,5 +48,15 @@ class RubocopCheckSingleFileCommand(RubocopCommand):
 class RubocopCheckProjectCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopCheckProjectCommand, self).run(edit)
-    project_folder = self.view.window().folders()[0]
+    folders = self.view.window().folders()
+    if len(folders) > 0:
+      self.run_rubocop_on(folders[0])
+    else:
+      sublime.status_message("RuboCop: No project folder available.")
+
+class RubocopCheckFileFolderCommand(RubocopCommand):
+  def run(self, edit):
+    super(RubocopCheckFileFolderCommand, self).run(edit)
+    file_path = self.view.file_name()
+    project_folder = os.path.dirname(file_path)
     self.run_rubocop_on(project_folder)

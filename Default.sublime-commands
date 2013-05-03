@@ -48,11 +48,15 @@
         }
     },
     {
-        "caption": "Check current file with Rubocop",
+        "caption": "RuboCop: Check current file",
         "command": "rubocop_check_single_file"
     },
     {
-        "caption": "Check current project with Rubocop",
+        "caption": "RuboCop: Check current project",
         "command": "rubocop_check_project"
+    },
+    {
+        "caption": "RuboCop: Check folder of current file",
+        "command": "rubocop_check_file_folder"
     }
 ]
