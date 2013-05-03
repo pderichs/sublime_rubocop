@@ -1,9 +1,9 @@
 [
     {
-        "id": "edit",
+        "id": "tools",
         "children":
         [
-            {"id": "rubocop_sublime_menu_cmd"},
+            { "id": "rubocop_sublime_menu_cmd" },
             { "command": "rubocop" }
         ]
     },
@@ -18,7 +18,7 @@
                 "children":
                 [
                     {
-                        "caption": "rubocop",
+                        "caption": "Rubocop",
                         "children":
                         [
                             {

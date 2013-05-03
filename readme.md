@@ -5,6 +5,30 @@ RVM to detect the rubocop script.
 
 Enjoy!
 
+## Installation
+
+1.)
+
+Navigate to the Sublime Text 2 Packages folder.
+
+On Mac OS X it can be found here:
+
+```
+$HOME/Library/Application Support/Sublime Text 2/Packages
+```
+
+2.)
+
+Run the git clone command right inside the packages directory.
+
+3.)
+
+Restart Sublime Text 2.
+
+4.)
+
+Done.
+
 ## License
 
 All of Sublime Rubocop is licensed under the MIT license.
