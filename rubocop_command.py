@@ -54,6 +54,7 @@ class RubocopCheckProjectCommand(RubocopCommand):
     else:
       sublime.status_message("RuboCop: No project folder available.")
 
+# Runs a check on the folder of the current file.
 class RubocopCheckFileFolderCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopCheckFileFolderCommand, self).run(edit)
