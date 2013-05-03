@@ -6,20 +6,23 @@
 import sublime
 import sublime_plugin
 import os
+import pipes
 
 class RubocopCommand(sublime_plugin.TextCommand):
   def run(self, edit):
-    self.file_path = self.view.file_name()
-    self.check_file()
+    self.check_file(self.view.file_name())
          
-  def check_file(self):
+  def check_file(self, file_path):
     # Using rvm to run rubocop
     rvm_cmd = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
-    rubocop_cmd = rvm_cmd + ' -S rubocop ' + self.file_path
 
-    self.run_shell_command(rubocop_cmd, '.')
-     
-  def run_shell_command(self, command, working_dir):
+    # TODO: Use shlex.quote as soon as a newer python version is available.
+    quoted_file_path = pipes.quote(file_path)
+    rubocop_cmd = rvm_cmd + ' -S rubocop ' + quoted_file_path
+
+    self.run_shell_command(rubocop_cmd)
+
+  def run_shell_command(self, command, working_dir='.'):
     if not command:
       return
     
@@ -28,5 +31,5 @@ class RubocopCommand(sublime_plugin.TextCommand):
       "shell": True,
       "working_dir": working_dir,
       "file_regex": r"^== (.*) ==",
-      "line_regex": r"^.:\ ?([0-9]*): (.*)"
+      "line_regex": r"^.:\ *([0-9]*): (.*)"
     })
