@@ -49,6 +49,10 @@
     },
     {
         "caption": "Check current file with Rubocop",
-        "command": "rubocop"
+        "command": "rubocop_check_single_file"
+    },
+    {
+        "caption": "Check current project with Rubocop",
+        "command": "rubocop_check_project"
     }
 ]

@@ -16,7 +16,7 @@ Enjoy!
 
 ## License
 
-All of Sublime Rubocop is licensed under the MIT license.
+All of Sublime RuboCop is licensed under the MIT license.
 
   Copyright (c) 2013 Patrick Derichs <patderichs@gmail.com>
 

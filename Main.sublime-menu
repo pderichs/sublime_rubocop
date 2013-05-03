@@ -4,7 +4,7 @@
         "children":
         [
             { "id": "rubocop_sublime_menu_cmd" },
-            { "command": "rubocop" }
+            { "command": "rubocop_check_single_file" }
         ]
     },
     {
@@ -18,7 +18,7 @@
                 "children":
                 [
                     {
-                        "caption": "Rubocop",
+                        "caption": "RuboCop",
                         "children":
                         [
                             {
