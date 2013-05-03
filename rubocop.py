@@ -2,7 +2,6 @@
 #
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
-
  
 import sublime
 import sublime_plugin
