@@ -7,13 +7,7 @@ Enjoy!
 
 ## Installation
 
-1. Navigate to the Sublime Text 2 Packages folder.
-
-  - On Mac OS X it can be found here:
-
-```
-$HOME/Library/Application Support/Sublime Text 2/Packages
-```
+1. Navigate to the Sublime Text 2 Packages folder (on Mac OS X it can be found here: `$HOME/Library/Application Support/Sublime Text 2/Packages`)
 
 2. Run the git clone command right inside the packages directory.
 
