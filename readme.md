@@ -1,6 +1,6 @@
 # Sublime RuboCop
 
-A Sublime Text 2 plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project. It uses RVM to detect RuboCop.
+A Sublime Text 2 plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project. It uses [RVM](https://rvm.io/) to run RuboCop.
 
 Enjoy!
 
