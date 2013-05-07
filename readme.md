@@ -10,9 +10,7 @@ Enjoy!
 
 2. Run the git clone command right inside the packages directory: `git clone git@github.com:pderichs/sublime_rubocop.git`
 
-3. Restart Sublime Text 2.
-
-4. Done.
+3. Done.
 
 ## License
 
