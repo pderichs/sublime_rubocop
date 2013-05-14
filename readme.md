@@ -1,6 +1,6 @@
 # Sublime RuboCop
 
-A Sublime Text 2 plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project. It uses [RVM](https://rvm.io/) to run RuboCop.
+A Sublime Text 2 plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project. By default it uses [RVM](https://rvm.io/) to run RuboCop, but you can specify the folder location of rubocop in the settings.
 
 Enjoy!
 
@@ -13,6 +13,10 @@ Enjoy!
 3. Done.
 
 (There is a queued Pull Request for Package Control, so these steps won't be necessary in future.)
+
+## Credits
+
+Thanks go out to [Will Bond](https://github.com/wbond) for his awesome sample and documentation about ST2 plugins, and thanks go out to the people implementing the [sublime-text-2-ruby-tests Plugin](https://github.com/maltize/sublime-text-2-ruby-tests) - your source gave me some important hints for my implementation.
 
 ## License
 
