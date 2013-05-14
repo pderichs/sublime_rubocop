@@ -35,6 +35,23 @@
             "children":
             [
               {
+                "command":"open_file",
+                "args":{
+                  "file":"${packages}/sublime_rubocop/RuboCop.sublime-settings"
+                },
+                "caption":"Settings – Default"
+              },
+              {
+                "command":"open_file",
+                "args":{
+                  "file":"${packages}/User/RuboCop.sublime-settings"
+                },
+                "caption":"Settings – User"
+              },
+              {
+                "caption":"-"
+              },
+              {
                 "command": "open_file",
                 "args": {
                     "file": "${packages}/sublime_rubocop/Default (Windows).sublime-keymap",

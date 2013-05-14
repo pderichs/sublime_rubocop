@@ -11,16 +11,42 @@ import os
 # Base class for all RuboCop commands
 class RubocopCommand(sublime_plugin.TextCommand):
   def run(self, edit):
+    self.load_config()
+
     # Using rvm to run rubocop
     self.rvm_cmd = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
+
+  def load_config(self):
+    s = sublime.load_settings("RuboCop.sublime-settings")
+
+    self.rubocop_location = s.get("rubocop_location")
+    if self.rubocop_location and os.path.isdir(self.rubocop_location):
+      # TODO: Use shlex.quote as soon as a newer python version is available.
+      self.rubocop_location = pipes.quote(self.rubocop_location)
+    else:
+      self.rubocop_location = ''
+
+  def is_executable(self, path):
+    return os.path.isfile(path) and os.access(path, os.X_OK)
 
   def run_rubocop_on(self, path):
     if not path:
       return
-      
+
     # TODO: Use shlex.quote as soon as a newer python version is available.
     quoted_file_path = pipes.quote(path)
-    rubocop_cmd = self.rvm_cmd + ' -S rubocop ' + quoted_file_path
+      
+    if self.rubocop_location == '':
+      rubocop_cmd = self.rvm_cmd + ' -S rubocop ' + quoted_file_path
+    else:
+      rubocop_executable = os.path.join(self.rubocop_location, 'rubocop')
+      if self.is_executable(rubocop_executable):
+        rubocop_cmd = rubocop_executable + ' ' + quoted_file_path
+      else:
+        sublime.error_message("Sublime RuboCop: Path to RuboCop is invalid: " + 
+          rubocop_executable
+        )
+        return
 
     self.run_shell_command(rubocop_cmd)
 
@@ -35,7 +61,6 @@ class RubocopCommand(sublime_plugin.TextCommand):
       "file_regex": r"^== (.*) ==",
       "line_regex": r"^.:\ *([0-9]*): (.*)"
     })
-
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):

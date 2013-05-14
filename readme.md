@@ -12,6 +12,8 @@ Enjoy!
 
 3. Done.
 
+(There is a queued Pull Request for Package Control, so these steps won't be necessary in future.)
+
 ## License
 
 All of Sublime RuboCop is licensed under the MIT license.
