@@ -46,17 +46,27 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def is_executable(self, path):
     return os.path.isfile(path) and os.access(path, os.X_OK)
 
-  def run_rubocop_on(self, path):
+  def quote(self, path):
+    # TODO: Use shlex.quote as soon as a newer python version is available.
+    return pipes.quote(path)
+
+  def run_rubocop_on(self, path, file_list=False):
     if not path:
       return
 
-    # TODO: Use shlex.quote as soon as a newer python version is available.
-    quoted_file_path = pipes.quote(path)
-    rubocop_cmd = self.cmd_prefix + ' ' + self.rubocop_command.replace(
-      '{path}', quoted_file_path)
-    
-    working_dir = os.path.dirname(quoted_file_path)
+    if not file_list:
+      # Single item to check.
+      quoted_file_path = self.quote(path)
+      working_dir = os.path.dirname(quoted_file_path)
+    else:
+      # Multiple files to check.
+      working_dir = '.'
+      quoted_file_path = ''
+      for file in path:
+        quoted_file_path += self.quote(file) + ' '
 
+    rubocop_cmd = self.cmd_prefix + ' ' + self.rubocop_command.replace(
+        '{path}', quoted_file_path)
     self.run_shell_command(rubocop_cmd, working_dir)
 
   def run_shell_command(self, command, working_dir='.'):
@@ -95,3 +105,19 @@ class RubocopCheckFileFolderCommand(RubocopCommand):
     file_path = self.view.file_name()
     project_folder = os.path.dirname(file_path)
     self.run_rubocop_on(project_folder)
+
+# Runs a check on all open files.
+class RubocopCheckOpenFilesCommand(RubocopCommand):
+  def run(self, edit):
+    super(RubocopCheckOpenFilesCommand, self).run(edit)
+    self.run_rubocop_on(self.open_ruby_files(), True)    
+
+  def open_ruby_files(self):
+    files = []
+    views = self.view.window().views()
+    for vw in views:
+      file_path = vw.file_name()
+      name, ext = os.path.splitext(file_path)
+      if ext == '.rb':
+        files.append(file_path)
+    return files

@@ -58,5 +58,9 @@
   {
     "caption": "RuboCop: Check folder of current file",
     "command": "rubocop_check_file_folder"
+  },
+  {
+    "caption": "RuboCop: Check all open files",
+    "command": "rubocop_check_open_files"
   }
 ]
