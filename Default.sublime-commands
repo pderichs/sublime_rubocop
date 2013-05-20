@@ -60,7 +60,7 @@
     "command": "rubocop_check_file_folder"
   },
   {
-    "caption": "RuboCop: Check all open files",
+    "caption": "RuboCop: Check all open Ruby files",
     "command": "rubocop_check_open_files"
   }
 ]
