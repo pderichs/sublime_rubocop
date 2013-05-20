@@ -1,6 +1,26 @@
 {
+  // Here you can provide your own command line
+  // which is used to run rubocop. The path will be
+  // replaced by the file or folder which needs
+  // to be checked.
+  //
+  // If check_for_rvm or check_for_rbenv is enabled,
+  // it will be prefixed with a call to rvm or rbenv.
+  // If none of them are enabled, the command will be
+  // executed without any additions.
   "rubocop_command": "rubocop {path}",
 
+  // If you want use RVM to run RuboCop, just
+  // set this to true.
+  //
+  // Note: If check_for_rvm and check_for_rbenv are both enabled,
+  // the plugin will use RVM.
   "check_for_rvm": true,
+
+  // If you want to use rbenv to run RuboCop, just
+  // set this to true.
+  //
+  // Note: If check_for_rvm and check_for_rbenv are both enabled,
+  // the plugin will use RVM.
   "check_for_rbenv": false
 }

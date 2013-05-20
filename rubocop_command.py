@@ -1,4 +1,4 @@
-# A simple Sublime Text 2 Rubocop Plug-In.
+# A simple Sublime Text 2 RuboCop Plug-In.
 #
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
