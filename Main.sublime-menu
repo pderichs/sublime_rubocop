@@ -37,7 +37,7 @@
               {
                 "command":"open_file",
                 "args":{
-                  "file":"${packages}/sublime_rubocop/RuboCop.sublime-settings"
+                  "file":"${packages}/RuboCop/RuboCop.sublime-settings"
                 },
                 "caption":"Settings – Default"
               },
@@ -54,7 +54,7 @@
               {
                 "command": "open_file",
                 "args": {
-                    "file": "${packages}/sublime_rubocop/Default (Windows).sublime-keymap",
+                    "file": "${packages}/RuboCop/Default (Windows).sublime-keymap",
                     "platform": "Windows"
                 },
                 "caption": "Key Bindings – Default"
@@ -62,7 +62,7 @@
               {
                 "command": "open_file",
                 "args": {
-                    "file": "${packages}/sublime_rubocop/Default (OSX).sublime-keymap",
+                    "file": "${packages}/RuboCop/Default (OSX).sublime-keymap",
                     "platform": "OSX"
                 },
                 "caption": "Key Bindings – Default"
@@ -70,7 +70,7 @@
               {
                 "command": "open_file",
                 "args": {
-                    "file": "${packages}/sublime_rubocop/Default (Linux).sublime-keymap",
+                    "file": "${packages}/RuboCop/Default (Linux).sublime-keymap",
                     "platform": "Linux"
                 },
                 "caption": "Key Bindings – Default"
