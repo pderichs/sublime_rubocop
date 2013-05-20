@@ -110,7 +110,11 @@ class RubocopCheckFileFolderCommand(RubocopCommand):
 class RubocopCheckOpenFilesCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopCheckOpenFilesCommand, self).run(edit)
-    self.run_rubocop_on(self.open_ruby_files(), True)    
+    files = self.open_ruby_files()
+    if len(files) > 0:
+      self.run_rubocop_on(files, True)
+    else:
+      sublime.status_message('RuboCop: There are no Ruby files to check.')
 
   def open_ruby_files(self):
     files = []
