@@ -1,3 +1,6 @@
 {
-  "rubocop_location": ""
+  "rubocop_command": "rubocop {path}",
+
+  "check_for_rvm": true,
+  "check_for_rbenv": false
 }
