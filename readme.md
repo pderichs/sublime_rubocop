@@ -16,6 +16,8 @@ Alternative way:
 
 2. Run the git clone command right inside the packages directory: `git clone git@github.com:pderichs/sublime_rubocop.git`
 
+3. Rename the "sublime_rubocop" folder to "RuboCop"
+
 ## Credits
 
 Thanks go out to [Will Bond](https://github.com/wbond) for his awesome sample and documentation about ST2 plugins, and thanks go out to the people implementing the [sublime-text-2-ruby-tests Plugin](https://github.com/maltize/sublime-text-2-ruby-tests) - your source gave me some important hints for my implementation.
