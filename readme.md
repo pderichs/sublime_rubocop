@@ -12,7 +12,7 @@ Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/
 
 Alternative way:
 
-1. Navigate to the Sublime Text Packages folder (on Mac OS X it can be found here: `$HOME/Library/Application Support/Sublime Text 3/Packages`, if you use another OS you can find the location of the Packages folder [here](http://docs.sublimetext.info/en/latest/basic_concepts.html#the-data-directory))
+1. Navigate to the Sublime Text Packages folder (You can find the location of the Packages folder [here](http://docs.sublimetext.info/en/latest/basic_concepts.html#the-data-directory))
 
 2. Run the git clone command right inside the packages directory: `git clone git@github.com:pderichs/sublime_rubocop.git "RuboCop"`
 
