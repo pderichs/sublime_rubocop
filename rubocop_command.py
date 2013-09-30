@@ -2,11 +2,13 @@
 #
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
- 
+
 import sublime_plugin
 import sublime
 import pipes
 import os
+import string
+import re
 
 # Base class for all RuboCop commands
 class RubocopCommand(sublime_plugin.TextCommand):
@@ -72,7 +74,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def run_shell_command(self, command, working_dir='.'):
     if not command:
       return
-    
+
     self.view.window().run_command('exec', {
       'cmd': [command],
       'shell': True,
@@ -86,6 +88,39 @@ class RubocopCheckSingleFileCommand(RubocopCommand):
     super(RubocopCheckSingleFileCommand, self).run(edit)
     file_path = self.view.file_name()
     self.run_rubocop_on(file_path)
+
+# Runs a check on modified files
+class RubocopCheckModified(RubocopCommand):
+  def run(self, edit):
+    super(RubocopCheckModified, self).run(edit)
+    root = self.git_repository_root()
+    files = [os.path.join(root, relative) for relative in self.added_or_modified_ruby_files()]
+    if len(files) > 0:
+      self.run_rubocop_on(files, True)
+    else:
+      sublime.status_message('RuboCop: There are no Ruby files to check.')
+
+  def added_or_modified_ruby_files(self):
+    output = os.popen("git status --porcelain").read()
+    lines = string.split(output, '\n')
+    files = [line for line in lines if self.is_ruby(line)]
+    return [self.strip_git_status(file) for file in files if self.is_added_or_modified(file)]
+
+  def git_repository_root(self):
+    return os.popen('git rev-parse --show-toplevel').read().strip()
+
+  def strip_git_status(self, line):
+    match = re.match(r'^( *[^ ]+) +(.*)', line)
+    if match:
+      return match.group(2)
+    else:
+      return None
+
+  def is_ruby(self, file):
+    return re.search(r'\.rb$', file)
+
+  def is_added_or_modified(self, file):
+    return re.search(r'^ *[AM] +', file)
 
 # Runs a check on the currently opened project.
 class RubocopCheckProjectCommand(RubocopCommand):

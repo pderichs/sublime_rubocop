@@ -3,7 +3,7 @@
     "id": "tools",
     "children":
     [
-      { 
+      {
         "id": "rubocop_sublime_menu_main",
         "caption": "RuboCop",
         "children":
@@ -13,6 +13,9 @@
 
           { "id": "rubocop_sublime_menu_project" },
           { "command": "rubocop_check_project" },
+
+          { "id": "rubocop_sublime_menu_modified" },
+          { "command": "rubocop_check_modified" },
 
           { "id": "rubocop_sublime_menu_file_folder" },
           { "command": "rubocop_check_file_folder" }

@@ -56,6 +56,10 @@
     "command": "rubocop_check_project"
   },
   {
+    "caption": "RuboCop: Check modified files",
+    "command": "rubocop_check_modified"
+  },
+  {
     "caption": "RuboCop: Check folder of current file",
     "command": "rubocop_check_file_folder"
   },
