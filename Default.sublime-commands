@@ -62,5 +62,41 @@
   {
     "caption": "RuboCop: Check all open Ruby files",
     "command": "rubocop_check_open_files"
+  },
+
+  // ------- Lint cops --------
+  {
+    "caption": "RuboCop: Check current file (only with lint cops)",
+    "command": "rubocop_check_current_file_only_with_lint_cops"
+  },
+  {
+    "caption": "RuboCop: Check current project (only with lint cops)",
+    "command": "rubocop_check_project_only_with_lint_cops"
+  },
+  {
+    "caption": "RuboCop: Check folder of current file (only with lint cops)",
+    "command": "rubocop_check_file_folder_only_with_lint_cops"
+  },
+  {
+    "caption": "RuboCop: Check all open Ruby files (only with lint cops)",
+    "command": "rubocop_check_open_files_only_with_lint_cops"
+  },
+
+  // ------- Rails cops --------
+  {
+    "caption": "RuboCop: Check current file (run extra Rails cops)",
+    "command": "rubocop_check_current_file_rails"
+  },
+  {
+    "caption": "RuboCop: Check current project (run extra Rails cops)",
+    "command": "rubocop_check_project_rails"
+  },
+  {
+    "caption": "RuboCop: Check folder of current file (run extra Rails cops)",
+    "command": "rubocop_check_file_folder_rails"
+  },
+  {
+    "caption": "RuboCop: Check all open Ruby files (run extra Rails cops)",
+    "command": "rubocop_check_open_files_rails"
   }
 ]

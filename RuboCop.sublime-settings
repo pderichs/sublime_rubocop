@@ -8,7 +8,7 @@
   // it will be prefixed with a call to rvm or rbenv.
   // If none of them are enabled, the command will be
   // executed without any additions.
-  "rubocop_command": "rubocop {path}",
+  "rubocop_command": "rubocop {options} {path}",
 
   // If you want use RVM to run RuboCop, just
   // set this to true.

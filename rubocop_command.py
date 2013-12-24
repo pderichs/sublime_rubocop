@@ -1,4 +1,4 @@
-# A simple Sublime Text 2 RuboCop Plug-In.
+# A simple Sublime Text RuboCop Plug-In.
 #
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
@@ -20,7 +20,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
     self.rubocop_command = s.get('rubocop_command')
     if not self.rubocop_command or self.rubocop_command is '':
-      self.rubocop_command = 'rubocop {path}'
+      self.rubocop_command = 'rubocop {options} {path}'
 
   def load_cmd_prefix(self, s):
     self.cmd_prefix = ''
@@ -50,6 +50,12 @@ class RubocopCommand(sublime_plugin.TextCommand):
     # TODO: Use shlex.quote as soon as a newer python version is available.
     return pipes.quote(path)
 
+  def used_options(self):
+    return ''
+
+  def command_with_options(self):
+    return self.rubocop_command.replace('{options}', self.used_options())
+
   def run_rubocop_on(self, path, file_list=False):
     if not path:
       return
@@ -65,8 +71,10 @@ class RubocopCommand(sublime_plugin.TextCommand):
       for file in path:
         quoted_file_path += self.quote(file) + ' '
 
-    rubocop_cmd = self.cmd_prefix + ' ' + self.rubocop_command.replace(
+    cop_command = self.command_with_options()
+    rubocop_cmd = self.cmd_prefix + ' ' + cop_command.replace(
         '{path}', quoted_file_path)
+
     self.run_shell_command(rubocop_cmd, working_dir)
 
   def run_shell_command(self, command, working_dir='.'):
@@ -79,6 +87,8 @@ class RubocopCommand(sublime_plugin.TextCommand):
       'working_dir': working_dir,
       'file_regex': r"^([^:]+):([0-9]*)",
     })
+
+# --------- General rubocop commands -------------
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):
@@ -124,3 +134,48 @@ class RubocopCheckOpenFilesCommand(RubocopCommand):
       if ext == '.rb':
         files.append(file_path)
     return files
+
+
+# --------- Lint Cops -------------
+
+# Runs a check on the current file (only using lint cops)
+class RubocopCheckCurrentFileOnlyWithLintCopsCommand(RubocopCheckSingleFileCommand):
+  def used_options(self):
+    return '-l'
+
+# Runs a check on the current project (only using lint cops)
+class RubocopCheckProjectOnlyWithLintCopsCommand(RubocopCheckProjectCommand):
+  def used_options(self):
+    return '-l'
+
+# Runs a check on the current project (only using lint cops)
+class RubocopCheckFileFolderOnlyWithLintCopsCommand(RubocopCheckFileFolderCommand):
+  def used_options(self):
+    return '-l'
+
+# Runs a check on all open files (only using lint cops)
+class RubocopCheckOpenFilesOnlyWithLintCopsCommand(RubocopCheckOpenFilesCommand):
+  def used_options(self):
+    return '-l'
+
+# --------- Rails Cops -------------
+
+# Runs a check on the current file (only using lint cops)
+class RubocopCheckCurrentFileRailsCommand(RubocopCheckSingleFileCommand):
+  def used_options(self):
+    return '-R'
+
+# Runs a check on the current project (only using lint cops)
+class RubocopCheckProjectRailsCommand(RubocopCheckProjectCommand):
+  def used_options(self):
+    return '-R'
+
+# Runs a check on the current project (only using lint cops)
+class RubocopCheckFileFolderRailsCommand(RubocopCheckFileFolderCommand):
+  def used_options(self):
+    return '-R'
+
+# Runs a check on all open files (only using lint cops)
+class RubocopCheckOpenFilesRailsCommand(RubocopCheckOpenFilesCommand):
+  def used_options(self):
+    return '-R'
