@@ -2,7 +2,7 @@
 #
 # Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
- 
+
 import sublime_plugin
 import sublime
 import pipes
@@ -60,10 +60,12 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if not path:
       return
 
+    path = path.replace('\\', '/')
     if not file_list:
       # Single item to check.
       quoted_file_path = self.quote(path)
-      working_dir = os.path.dirname(quoted_file_path)
+      # DJL working_dir = os.path.dirname(quoted_file_path)
+      working_dir = os.path.dirname(path)
     else:
       # Multiple files to check.
       working_dir = '.'
@@ -80,7 +82,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def run_shell_command(self, command, working_dir='.'):
     if not command:
       return
-    
+
     self.view.window().run_command('exec', {
       'cmd': [command],
       'shell': True,

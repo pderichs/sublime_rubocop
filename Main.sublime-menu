@@ -3,19 +3,25 @@
     "id": "tools",
     "children":
     [
-      { 
+      {
         "id": "rubocop_sublime_menu_main",
         "caption": "RuboCop",
         "children":
         [
-          { "id": "rubocop_sublime_menu_single_file" },
-          { "command": "rubocop_check_single_file" },
+          {
+            "id": "rubocop_sublime_menu_single_file" ,
+            "command": "rubocop_check_single_file"
+          },
 
-          { "id": "rubocop_sublime_menu_project" },
-          { "command": "rubocop_check_project" },
+          {
+            "id": "rubocop_sublime_menu_project",
+            "command": "rubocop_check_project"
+          },
 
-          { "id": "rubocop_sublime_menu_file_folder" },
-          { "command": "rubocop_check_file_folder" }
+          {
+            "id": "rubocop_sublime_menu_file_folder",
+            "command": "rubocop_check_file_folder"
+          }
         ]
       }
     ]
