@@ -60,9 +60,11 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if not path:
       return
 
+    path = path.replace('\\', '/')
     if not file_list:
       # Single item to check.
       quoted_file_path = self.quote(path)
+      # DJL working_dir = os.path.dirname(quoted_file_path)
       working_dir = os.path.dirname(path)
     else:
       # Multiple files to check.

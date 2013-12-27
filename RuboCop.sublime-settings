@@ -15,7 +15,7 @@
   //
   // Note: If check_for_rvm and check_for_rbenv are both enabled,
   // the plugin will use RVM.
-  "check_for_rvm": true,
+  "check_for_rvm": false,
 
   // If you want to use rbenv to run RuboCop, just
   // set this to true.
