@@ -75,6 +75,6 @@ class RubocopEventListener(sublime_plugin.EventListener):
       first_sel = curr_sel[0]
       row, col = view.rowcol(first_sel.begin())
       if row in self.remark_dict.keys():
-        sublime.status_message(self.remark_dict[row])
+        sublime.status_message('RuboCop: {0}'.format(self.remark_dict[row]))
       else:
         sublime.status_message('')
