@@ -7,8 +7,12 @@ import sublime_plugin
 import sublime
 import os
 
-from file_tools import FileTools
-from rubocop_runner import RubocopRunner
+if sublime.version() >= '3000':
+  from RuboCop.file_tools import FileTools
+  from RuboCop.rubocop_runner import RubocopRunner
+else:
+  from file_tools import FileTools
+  from rubocop_runner import RubocopRunner
 
 SETTINGS_FILE = 'RuboCop.sublime-settings'
 

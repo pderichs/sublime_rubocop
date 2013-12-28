@@ -8,9 +8,14 @@ import sublime_plugin
 import re
 import os
 
-from file_tools import FileTools
-from rubocop_runner import RubocopRunner
-from rubocop_command import SETTINGS_FILE
+if sublime.version() >= '3000':
+  from RuboCop.file_tools import FileTools
+  from RuboCop.rubocop_runner import RubocopRunner
+  from RuboCop.rubocop_command import SETTINGS_FILE
+else:
+  from file_tools import FileTools
+  from rubocop_runner import RubocopRunner
+  from rubocop_command import SETTINGS_FILE
 
 REGIONS_ID = 'rubocop_remark_regions'
 
