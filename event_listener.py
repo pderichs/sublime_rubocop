@@ -5,6 +5,7 @@
 
 import sublime
 import sublime_plugin
+import locale
 import re
 import os
 
@@ -30,14 +31,10 @@ class RubocopEventListener(sublime_plugin.EventListener):
     view.erase_regions(REGIONS_ID)
 
   def line_no_of_cop_result(self, file_name, result):
-    if isinstance(result, bytes):
-      fn = file_name.encode('utf-8')
-    else:
-      fn = file_name
-    if result.startswith(fn):
-      reg_result = re.search(b"^([^:]+):([0-9]*):.*:(.*)", result)
-      if reg_result:
-        return reg_result.group(2), reg_result.group(3).strip()
+    res = result.decode(locale.getpreferredencoding())
+    reg_result = re.search(r"^([^:]+):([0-9]*):.*:(.*)", res)
+    if reg_result:
+      return reg_result.group(2), reg_result.group(3).strip()
     return None, None
 
   def set_marks_by_results(self, view, cop_results):
@@ -61,9 +58,9 @@ class RubocopEventListener(sublime_plugin.EventListener):
     cmd = s.get('rubocop_command')
     runner = RubocopRunner(use_rbenv, use_rvm, cmd)
     output = runner.run(path).splitlines()
-    # print "***** Rubocop output: ********"
-    # print output
-    # print ''
+    # print("***** Rubocop output: ********")
+    # print(output)
+    # print('')
     return output
 
   def on_post_save(self, view):
