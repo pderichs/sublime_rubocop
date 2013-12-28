@@ -5,8 +5,12 @@
  
 import sublime_plugin
 import sublime
-import pipes
 import os
+
+from file_tools import FileTools
+from rubocop_runner import RubocopRunner
+
+SETTINGS_FILE = 'RuboCop.sublime-settings'
 
 # Base class for all RuboCop commands
 class RubocopCommand(sublime_plugin.TextCommand):
@@ -14,41 +18,13 @@ class RubocopCommand(sublime_plugin.TextCommand):
     self.load_config()
 
   def load_config(self):
-    s = sublime.load_settings('RuboCop.sublime-settings')
-
-    self.load_cmd_prefix(s)
-
+    s = sublime.load_settings(SETTINGS_FILE)
+    use_rvm = s.get('check_for_rvm')
+    use_rbenv = s.get('check_for_rbenv')
     self.rubocop_command = s.get('rubocop_command')
-    if not self.rubocop_command or self.rubocop_command is '':
-      self.rubocop_command = 'rubocop {options} {path}'
 
-  def load_cmd_prefix(self, s):
-    self.cmd_prefix = ''
-    if not self.load_rvm(s):
-      self.load_rbenv(s)
-
-  def load_rvm(self, s):
-    rvm_cmd = os.path.expanduser('~/.rvm/bin/rvm-auto-ruby')
-    if s.get("check_for_rvm") and self.is_executable(rvm_cmd):
-      self.cmd_prefix = rvm_cmd + ' -S'
-      return True
-
-    return False
-
-  def load_rbenv(self, s):
-    rbenv_cmd = os.path.expanduser('~/.rbenv/bin/rbenv')
-    if s.get('check_for_rbenv') and self.is_executable(rbenv_cmd):
-      self.cmd_prefix = rbenv_cmd + ' exec'
-      return True
-
-    return False
-
-  def is_executable(self, path):
-    return os.path.isfile(path) and os.access(path, os.X_OK)
-
-  def quote(self, path):
-    # TODO: Use shlex.quote as soon as a newer python version is available.
-    return pipes.quote(path)
+    runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command)
+    self.rubocop_command = runner.command_string() + ' {options} {path}'
 
   def used_options(self):
     return ''
@@ -62,18 +38,17 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
     if not file_list:
       # Single item to check.
-      quoted_file_path = self.quote(path)
+      quoted_file_path = FileTools.quote(path)
       working_dir = os.path.dirname(quoted_file_path)
     else:
       # Multiple files to check.
       working_dir = '.'
       quoted_file_path = ''
       for file in path:
-        quoted_file_path += self.quote(file) + ' '
+        quoted_file_path += FileTools.quote(file) + ' '
 
     cop_command = self.command_with_options()
-    rubocop_cmd = self.cmd_prefix + ' ' + cop_command.replace(
-        '{path}', quoted_file_path)
+    rubocop_cmd = cop_command.replace('{path}', quoted_file_path)
 
     self.run_shell_command(rubocop_cmd, working_dir)
 
@@ -130,8 +105,7 @@ class RubocopCheckOpenFilesCommand(RubocopCommand):
     views = self.view.window().views()
     for vw in views:
       file_path = vw.file_name()
-      name, ext = os.path.splitext(file_path)
-      if ext == '.rb':
+      if FileTools.is_ruby_file(file_path):
         files.append(file_path)
     return files
 

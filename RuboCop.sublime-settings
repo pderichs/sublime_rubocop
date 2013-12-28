@@ -8,7 +8,7 @@
   // it will be prefixed with a call to rvm or rbenv.
   // If none of them are enabled, the command will be
   // executed without any additions.
-  "rubocop_command": "rubocop {options} {path}",
+  "rubocop_command": "rubocop",
 
   // If you want use RVM to run RuboCop, just
   // set this to true.
@@ -22,5 +22,14 @@
   //
   // Note: If check_for_rvm and check_for_rbenv are both enabled,
   // the plugin will use RVM.
-  "check_for_rbenv": false
+  "check_for_rbenv": false,
+
+  // If you want to automatically check ruby files whenever you
+  // save a file within ST, just set this to true.
+  //
+  // Attention: Using that functionality consumes a bit of time,
+  // so ST might be a bit unresponsive when saving. As soon as you
+  // encounter performance problems during saving a ruby file you 
+  // should disable that feature.
+  "check_on_save": true
 }
