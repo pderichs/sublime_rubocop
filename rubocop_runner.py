@@ -1,3 +1,8 @@
+# Sublime RuboCop plugin
+#
+# Author: Patrick Derichs (patderichs@gmail.com)
+# License: MIT (http://opensource.org/licenses/MIT)
+
 import os
 import subprocess
 from file_tools import FileTools
@@ -36,17 +41,9 @@ class RubocopRunner(object):
     call_list.extend(options.split())
     call_list.extend(path.split())
 
-    # print "--- Runner: Rubocop has started ---"
-    # print "Options: " + options
-    # print "Path: " + path
-    # print "Command: " + ' '.join(call_list)
-
     p = subprocess.Popen(call_list, 
       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-
-    # print "Output:"
-    # print out
 
     return out
 
