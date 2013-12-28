@@ -19,7 +19,6 @@ class RubocopEventListener(sublime_plugin.EventListener):
       reg_result = re.search(r"^([^:]+):([0-9]*)", result)
       if reg_result:
         return reg_result.group(2)
-
     return None
 
   def set_marks_by_results(self, view, cop_results):
@@ -31,7 +30,8 @@ class RubocopEventListener(sublime_plugin.EventListener):
       if line_no:
         line = view.line(view.text_point(int(line_no) - 1, 0))
         lines.append(sublime.Region(line.begin(), line.end()))
-    view.add_regions(REGIONS_ID, lines, 'invalid')
+    view.add_regions(REGIONS_ID, lines, 'invalid', 'circle', 
+      sublime.PERSISTENT)
 
   def run_rubocop(self, path):
     s = sublime.load_settings(SETTINGS_FILE)
@@ -51,3 +51,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
     self.clear_marks(view)
     results = self.run_rubocop(view.file_name())
     self.set_marks_by_results(view, results)
+
+  # hbi
+  # def on_selection_modified(self, view):
+  #   print "SELECTION CHANGED!"
