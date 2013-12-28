@@ -8,9 +8,14 @@ import sublime_plugin
 import re
 import os
 
-from file_tools import FileTools
-from rubocop_runner import RubocopRunner
-from rubocop_command import SETTINGS_FILE
+if sublime.version() >= '3000':
+  from RuboCop.file_tools import FileTools
+  from RuboCop.rubocop_runner import RubocopRunner
+  from RuboCop.rubocop_command import SETTINGS_FILE
+else:
+  from file_tools import FileTools
+  from rubocop_runner import RubocopRunner
+  from rubocop_command import SETTINGS_FILE
 
 REGIONS_ID = 'rubocop_remark_regions'
 
@@ -25,8 +30,12 @@ class RubocopEventListener(sublime_plugin.EventListener):
     view.erase_regions(REGIONS_ID)
 
   def line_no_of_cop_result(self, file_name, result):
-    if result.startswith(file_name):
-      reg_result = re.search(r"^([^:]+):([0-9]*):.*:(.*)", result)
+    if isinstance(result, bytes):
+      fn = file_name.encode('utf-8')
+    else:
+      fn = file_name
+    if result.startswith(fn):
+      reg_result = re.search(b"^([^:]+):([0-9]*):.*:(.*)", result)
       if reg_result:
         return reg_result.group(2), reg_result.group(3).strip()
     return None, None

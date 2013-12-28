@@ -5,7 +5,12 @@
 
 import os
 import subprocess
-from file_tools import FileTools
+import sublime
+
+if sublime.version() >= '3000':
+  from RuboCop.file_tools import FileTools
+else:
+  from file_tools import FileTools
 
 RVM_PATH = '~/.rvm/bin/rvm-auto-ruby'
 RBENV_PATH = '~/.rbenv/bin/rbenv'
