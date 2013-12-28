@@ -30,8 +30,12 @@ class RubocopEventListener(sublime_plugin.EventListener):
     view.erase_regions(REGIONS_ID)
 
   def line_no_of_cop_result(self, file_name, result):
-    if result.startswith(file_name):
-      reg_result = re.search(r"^([^:]+):([0-9]*):.*:(.*)", result)
+    if isinstance(result, bytes):
+      fn = file_name.encode('utf-8')
+    else:
+      fn = file_name
+    if result.startswith(fn):
+      reg_result = re.search(b"^([^:]+):([0-9]*):.*:(.*)", result)
       if reg_result:
         return reg_result.group(2), reg_result.group(3).strip()
     return None, None
