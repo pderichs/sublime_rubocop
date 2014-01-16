@@ -3,7 +3,7 @@
     "id": "tools",
     "children":
     [
-      { 
+      {
         "id": "rubocop_sublime_menu_main",
         "caption": "RuboCop",
         "children":

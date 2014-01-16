@@ -17,6 +17,9 @@
   // the plugin will use RVM.
   "check_for_rvm": true,
 
+  // The path to RVM's rvm-auto-ruby binary
+  "rvm_auto_ruby_path":  "~/.rvm/bin/rvm-auto-ruby",
+
   // If you want to use rbenv to run RuboCop, just
   // set this to true.
   //
@@ -24,12 +27,15 @@
   // the plugin will use RVM.
   "check_for_rbenv": false,
 
+  // The path to rbenv's binary
+  "rbenv_path":  "~/.rbenv/bin/rbenv",
+
   // If you want to automatically check ruby files whenever you
   // save a file within ST, just set this to true.
   //
   // Attention: Using that functionality consumes a bit of time,
   // so ST might be a bit unresponsive when saving. As soon as you
-  // encounter performance problems during saving a ruby file you 
+  // encounter performance problems during saving a ruby file you
   // should disable that feature.
   "check_on_save": true
 }
