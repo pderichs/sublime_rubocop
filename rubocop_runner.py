@@ -40,13 +40,13 @@ class RubocopRunner(object):
       self.cmd_prefix = rbenv_cmd + ' exec'
       return True
     return False
-    
+
   def run(self, path, options=''):
     call_list = self.command_list()
     call_list.extend(options.split())
     call_list.extend(path.split())
 
-    p = subprocess.Popen(call_list, 
+    p = subprocess.Popen(call_list,
       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 

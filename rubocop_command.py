@@ -59,7 +59,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def run_shell_command(self, command, working_dir='.'):
     if not command:
       return
-    
+
     self.view.window().run_command('exec', {
       'cmd': [command],
       'shell': True,

@@ -29,7 +29,7 @@
   //
   // Attention: Using that functionality consumes a bit of time,
   // so ST might be a bit unresponsive when saving. As soon as you
-  // encounter performance problems during saving a ruby file you 
+  // encounter performance problems during saving a ruby file you
   // should disable that feature.
   "check_on_save": true
 }
