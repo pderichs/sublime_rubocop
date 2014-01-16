@@ -26,8 +26,10 @@ class RubocopCommand(sublime_plugin.TextCommand):
     use_rvm = s.get('check_for_rvm')
     use_rbenv = s.get('check_for_rbenv')
     self.rubocop_command = s.get('rubocop_command')
+    rvm_auto_ruby_path = s.get('rvm_auto_ruby_path')
+    rbenv_path = s.get('rbenv_path')
 
-    runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command)
+    runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command, rvm_auto_ruby_path, rbenv_path)
     self.rubocop_command = runner.command_string() + ' {options} {path}'
 
   def used_options(self):

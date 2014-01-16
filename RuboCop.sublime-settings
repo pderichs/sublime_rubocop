@@ -17,12 +17,18 @@
   // the plugin will use RVM.
   "check_for_rvm": true,
 
+  // The path to RVM's rvm-auto-ruby binary
+  "rvm_auto_ruby_path":  "~/.rvm/bin/rvm-auto-ruby",
+
   // If you want to use rbenv to run RuboCop, just
   // set this to true.
   //
   // Note: If check_for_rvm and check_for_rbenv are both enabled,
   // the plugin will use RVM.
   "check_for_rbenv": false,
+
+  // The path to rbenv's binary
+  "rbenv_path":  "~/.rbenv/bin/rbenv",
 
   // If you want to automatically check ruby files whenever you
   // save a file within ST, just set this to true.
