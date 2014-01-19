@@ -65,7 +65,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
     # print('')
     return output
 
-  def on_post_save(self, view):
+  def do_post_save_check(self, view):
     self.clear_marks(view)
 
     if not sublime.load_settings(SETTINGS_FILE).get('check_on_save'):
@@ -76,6 +76,17 @@ class RubocopEventListener(sublime_plugin.EventListener):
 
     results = self.run_rubocop(view.file_name())
     self.set_marks_by_results(view, results)
+
+  def on_post_save(self, view):
+    if sublime.version() >= '3000':
+      # To improve performance, we use the async method within ST3
+      return
+
+    self.do_post_save_check(view)
+
+  def on_post_save_async(self, view):
+    # This gets only called by ST3
+    self.do_post_save_check(view)
 
   def on_selection_modified(self, view):
     curr_sel = view.sel()
