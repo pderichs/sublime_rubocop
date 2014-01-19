@@ -60,20 +60,14 @@ class RubocopEventListener(sublime_plugin.EventListener):
     rbenv_path = s.get('rbenv_path')
     runner = RubocopRunner(use_rbenv, use_rvm, cmd, rvm_path, rbenv_path)
     output = runner.run(path).splitlines()
-    # print("***** Rubocop output: ********")
-    # print(output)
-    # print('')
     return output
 
   def do_post_save_check(self, view):
     self.clear_marks(view)
-
     if not sublime.load_settings(SETTINGS_FILE).get('check_on_save'):
       return
-
     if not FileTools.is_ruby_file(view.file_name()):
       return
-
     results = self.run_rubocop(view.file_name())
     self.set_marks_by_results(view, results)
 
@@ -85,7 +79,9 @@ class RubocopEventListener(sublime_plugin.EventListener):
     self.do_post_save_check(view)
 
   def on_post_save_async(self, view):
-    # This gets only called by ST3
+    self.do_post_save_check(view)
+
+  def on_load_async(self, view):
     self.do_post_save_check(view)
 
   def on_selection_modified(self, view):
