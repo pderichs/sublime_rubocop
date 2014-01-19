@@ -4,7 +4,7 @@ A Sublime Text plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) 
 
 Additionally it will check ruby files when you save them and mark issues in the editor. If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (```check_on_save```).
 
-By default this plugin uses [RVM](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings.
+By default this plugin uses [RVM](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings. The plugin uses default paths to rvm or rbenv but you can customize these paths in the settings.
 
 Enjoy!
 
