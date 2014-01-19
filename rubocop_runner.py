@@ -5,12 +5,12 @@
 
 import os
 import subprocess
-import sublime
+# import sublime
 
-if sublime.version() >= '3000':
-  from RuboCop.file_tools import FileTools
-else:
-  from file_tools import FileTools
+# if sublime.version() >= '3000':
+#   from RuboCop.file_tools import FileTools
+# else:
+#   from file_tools import FileTools
 
 class RubocopRunner(object):
   """This class takes care of the rubocop location and its execution"""
@@ -27,15 +27,15 @@ class RubocopRunner(object):
       self.load_rbenv()
 
   def load_rvm(self):
-    rvm_cmd = os.path.expanduser(self.rvm_auto_ruby_path)
-    if FileTools.is_executable(rvm_cmd):
+    if self.use_rvm:
+      rvm_cmd = os.path.expanduser(RVM_PATH)
       self.cmd_prefix = rvm_cmd + ' -S'
       return True
     return False
 
   def load_rbenv(self):
-    rbenv_cmd = os.path.expanduser(self.rbenv_path)
-    if FileTools.is_executable(rbenv_cmd):
+    if self.use_rbenv:
+      rbenv_cmd = os.path.expanduser(RBENV_PATH)
       self.cmd_prefix = rbenv_cmd + ' exec'
       return True
     return False
@@ -52,7 +52,6 @@ class RubocopRunner(object):
     return out
 
   def command_list(self):
-    cmd = ''
     if not self.custom_rubocop_cmd or self.custom_rubocop_cmd is '':
       self.load_cmd_prefix()
       cmd = self.cmd_prefix + ' rubocop'
