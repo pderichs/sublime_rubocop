@@ -2,11 +2,7 @@
 
 A Sublime Text plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project.
 
-Additionally it will check ruby files when you save them and mark issues in the editor. If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (```check_on_save```).
-
-By default this plugin uses [RVM](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings. The plugin uses default paths to rvm or rbenv but you can customize these paths in the settings.
-
-Enjoy!
+The Plugin currently supports both ST2 and ST3, but the usage of ST3 is recommended.
 
 ## Installation
 
@@ -21,6 +17,24 @@ Alternative way:
 2. Run the git clone command right inside the packages directory: `git clone git@github.com:pderichs/sublime_rubocop.git "RuboCop"`
 
 3. Restart Sublime Text.
+
+## Features
+
+You can run rubocop from the ST menu in many ways. If there are any issues, they will be shown and you can double click each issue to jump directly to the source code location.
+
+### ST3
+
+In ST3 each file gets automatically checked when it is loaded and saved. Issues will be marked right inside the view. You can disable automatic checking in the settings (see ```check_on_save```).
+
+### ST2
+
+The Plugin will check ruby files when you save them and mark issues right inside the view.
+
+**Note**: If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```check_on_save```).
+
+## Environment
+
+By default this plugin uses [rvm](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings. The plugin uses default paths to run rvm or rbenv but you can customize these paths in the settings.
 
 ## Credits
 
