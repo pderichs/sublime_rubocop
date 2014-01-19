@@ -1,25 +1,30 @@
 # Sublime RuboCop plugin
 #
-# Author: Patrick Derichs (patderichs@gmail.com)
+# Initial Author: Patrick Derichs (patderichs@gmail.com)
 # License: MIT (http://opensource.org/licenses/MIT)
 
 import os
 import subprocess
-# import sublime
 
-# if sublime.version() >= '3000':
-#   from RuboCop.file_tools import FileTools
-# else:
-#   from file_tools import FileTools
+RVM_DEFAULT_PATH = '~/.rvm/bin/rvm-auto-ruby'
+RBENV_DEFAULT_PATH = '~/.rbenv/bin/rbenv'
 
 class RubocopRunner(object):
   """This class takes care of the rubocop location and its execution"""
-  def __init__(self, use_rbenv, use_rvm, custom_rubocop_cmd, rvm_auto_ruby_path, rbenv_path):
+  def __init__(self, use_rbenv, use_rvm, custom_rubocop_cmd, rvm_auto_ruby_path=None, rbenv_path=None):
     self.use_rvm = use_rvm
     self.use_rbenv = use_rbenv
     self.custom_rubocop_cmd = custom_rubocop_cmd
-    self.rvm_auto_ruby_path = rvm_auto_ruby_path
-    self.rbenv_path = rbenv_path
+
+    if rvm_auto_ruby_path is None:
+      self.rvm_auto_ruby_path = RVM_DEFAULT_PATH
+    else:
+      self.rvm_auto_ruby_path = rvm_auto_ruby_path
+
+    if rbenv_path is None:
+      self.rbenv_path = RBENV_DEFAULT_PATH
+    else:
+      self.rbenv_path = rbenv_path
 
   def load_cmd_prefix(self):
     self.cmd_prefix = ''
@@ -28,14 +33,14 @@ class RubocopRunner(object):
 
   def load_rvm(self):
     if self.use_rvm:
-      rvm_cmd = os.path.expanduser(RVM_PATH)
+      rvm_cmd = os.path.expanduser(self.rvm_auto_ruby_path)
       self.cmd_prefix = rvm_cmd + ' -S'
       return True
     return False
 
   def load_rbenv(self):
     if self.use_rbenv:
-      rbenv_cmd = os.path.expanduser(RBENV_PATH)
+      rbenv_cmd = os.path.expanduser(self.rbenv_path)
       self.cmd_prefix = rbenv_cmd + ' exec'
       return True
     return False
