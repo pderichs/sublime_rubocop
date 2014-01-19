@@ -20,7 +20,7 @@ Alternative way:
 
 ## Features
 
-You can run rubocop from the ST menu in many ways. If there are any issues, they will be shown and you can double click each issue to jump directly to the source code location.
+You can run RuboCop from the ST menu in many ways. If there are any issues, they will be shown and you can double click each issue to jump directly to the source code location.
 
 ### ST3
 
