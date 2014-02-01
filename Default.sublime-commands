@@ -63,6 +63,10 @@
     "caption": "RuboCop: Check all open Ruby files",
     "command": "rubocop_check_open_files"
   },
+  {
+    "caption": "RuboCop: Toggle auto check",
+    "command": "rubocop_pause_toggle"
+  },
 
   // ------- Lint cops --------
   {
