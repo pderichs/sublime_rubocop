@@ -24,10 +24,18 @@ REGIONS_ID = 'rubocop_remark_regions'
 class RubocopEventListener(sublime_plugin.EventListener):
   def __init__(self):
     super(RubocopEventListener, self).__init__()
-    self.remark_dict = {}
+    self.file_remark_dict = {}
+
+  def get_current_file_dict(self, view):
+    if not (view.file_name() in self.file_remark_dict.keys()):
+      return None
+
+    return self.file_remark_dict[view.file_name()]
 
   def clear_marks(self, view):
-    self.remark_dict = {}
+    dct = self.get_current_file_dict(view)
+    if dct:
+      dct.clear()
     view.erase_regions(REGIONS_ID)
 
   def line_no_of_cop_result(self, file_name, result):
@@ -41,11 +49,15 @@ class RubocopEventListener(sublime_plugin.EventListener):
     lines = []
     path = view.file_name()
     base_file = os.path.basename(path)
+    view_dict = self.get_current_file_dict(view)
+    if not view_dict:
+      view_dict = {}
+      self.file_remark_dict[path] = view_dict
     for result in cop_results:
       line_no, message = self.line_no_of_cop_result(base_file, result)
       if line_no:
         ln = int(line_no) - 1
-        self.remark_dict[ln] = message
+        view_dict[ln] = message
         line = view.line(view.text_point(ln, 0))
         lines.append(sublime.Region(line.begin(), line.end()))
     view.add_regions(REGIONS_ID, lines, 'invalid', 'circle', 
@@ -87,9 +99,12 @@ class RubocopEventListener(sublime_plugin.EventListener):
   def on_selection_modified(self, view):
     curr_sel = view.sel()
     if curr_sel:
+      view_dict = self.get_current_file_dict(view)
+      if not view_dict:
+        return
       first_sel = curr_sel[0]
       row, col = view.rowcol(first_sel.begin())
-      if row in self.remark_dict.keys():
-        sublime.status_message('RuboCop: {0}'.format(self.remark_dict[row]))
+      if row in view_dict.keys():
+        sublime.status_message('RuboCop: {0}'.format(view_dict[row]))
       else:
         sublime.status_message('')
