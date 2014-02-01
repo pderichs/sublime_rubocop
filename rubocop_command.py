@@ -71,7 +71,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
 # --------- General rubocop commands -------------
 
-# Toggles check_on_save setting
+# Toggles mark_issues_in_view setting
 class RubocopPauseToggleCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopPauseToggleCommand, self).run(edit)
@@ -79,8 +79,8 @@ class RubocopPauseToggleCommand(RubocopCommand):
 
   def pause(self):
     s = sublime.load_settings(SETTINGS_FILE)
-    check_on_save = s.get('check_on_save')
-    s.set('check_on_save', not check_on_save)
+    mark_issues_in_view = s.get('mark_issues_in_view')
+    s.set('mark_issues_in_view', not mark_issues_in_view)
     sublime.save_settings(SETTINGS_FILE)
 
     # TODO: Update current view?

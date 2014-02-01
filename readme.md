@@ -24,13 +24,13 @@ You can run RuboCop from the ST menu in many ways. If there are any issues, they
 
 ### ST3
 
-In ST3 each file gets automatically checked when it is loaded and saved. Issues will be marked right inside the view. You can disable automatic checking in the settings (see ```check_on_save```).
+In ST3 each file gets automatically checked when it is loaded and saved. Issues will be marked right inside the view. You can disable automatic checking in the settings (see ```mark_issues_in_view```).
 
 ### ST2
 
 The Plugin will check ruby files when you save them and mark issues right inside the view.
 
-**Note**: If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```check_on_save```).
+**Note**: If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```mark_issues_in_view```).
 
 ## Environment
 

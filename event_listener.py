@@ -62,9 +62,9 @@ class RubocopEventListener(sublime_plugin.EventListener):
     output = runner.run(path).splitlines()
     return output
 
-  def do_post_save_check(self, view):
+  def do_in_file_check(self, view):
     self.clear_marks(view)
-    if not sublime.load_settings(SETTINGS_FILE).get('check_on_save'):
+    if not sublime.load_settings(SETTINGS_FILE).get('mark_issues_in_view'):
       return
     if not FileTools.is_ruby_file(view.file_name()):
       return
@@ -76,13 +76,13 @@ class RubocopEventListener(sublime_plugin.EventListener):
       # To improve performance, we use the async method within ST3
       return
 
-    self.do_post_save_check(view)
+    self.do_in_file_check(view)
 
   def on_post_save_async(self, view):
-    self.do_post_save_check(view)
+    self.do_in_file_check(view)
 
   def on_load_async(self, view):
-    self.do_post_save_check(view)
+    self.do_in_file_check(view)
 
   def on_selection_modified(self, view):
     curr_sel = view.sel()

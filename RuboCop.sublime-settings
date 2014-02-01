@@ -30,12 +30,12 @@
   // The path to rbenv's binary
   "rbenv_path":  "~/.rbenv/bin/rbenv",
 
-  // If you want to automatically check ruby files whenever you
-  // save a file within ST, just set this to true.
+  // If you want issues to be marked automatically inside the view
+  // set this to true.
   //
-  // Attention: Using that functionality consumes a bit of time,
-  // so ST might be a bit unresponsive when saving. As soon as you
-  // encounter performance problems during saving a ruby file you
-  // should disable that feature.
-  "check_on_save": true
+  // Attention ST2 users: Using that functionality consumes a bit 
+  // of time, so ST2 might be a bit unresponsive when saving. As soon
+  // as you encounter performance problems during saving a ruby file you
+  // should set this to false.
+  "mark_issues_in_view": true
 }
