@@ -35,6 +35,16 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def used_options(self):
     return ''
 
+  def pause(self):
+    s = sublime.load_settings(SETTINGS_FILE)
+    check_on_save = s.get('check_on_save')
+    if check_on_save:
+      s.set('check_on_save', False)
+      sublime.save_settings(SETTINGS_FILE)
+    else:
+      s.set('check_on_save', True)
+      sublime.save_settings(SETTINGS_FILE)
+
   def command_with_options(self):
     return self.rubocop_command.replace('{options}', self.used_options())
 
@@ -70,6 +80,12 @@ class RubocopCommand(sublime_plugin.TextCommand):
     })
 
 # --------- General rubocop commands -------------
+
+#Toggles check_on_save setting
+class RubocopPauseToggleCommand(RubocopCommand):
+  def run(self, edit):
+    super(RubocopPauseToggleCommand, self).run(edit)
+    self.pause()
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):
