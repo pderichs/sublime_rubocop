@@ -12,19 +12,21 @@ import os
 if sublime.version() >= '3000':
   from RuboCop.file_tools import FileTools
   from RuboCop.rubocop_runner import RubocopRunner
-  from RuboCop.rubocop_command import SETTINGS_FILE
+  from RuboCop.constants import *
 else:
   from file_tools import FileTools
   from rubocop_runner import RubocopRunner
-  from rubocop_command import SETTINGS_FILE
+  from constants import *
 
-REGIONS_ID = 'rubocop_remark_regions'
+current_instance = None
 
 # Event listener to provide on the fly checks when saving a ruby file.
 class RubocopEventListener(sublime_plugin.EventListener):
   def __init__(self):
+    global current_instance
     super(RubocopEventListener, self).__init__()
     self.file_remark_dict = {}
+    current_instance = self
 
   def get_current_file_dict(self, view):
     if not (view.file_name() in self.file_remark_dict.keys()):
@@ -74,14 +76,17 @@ class RubocopEventListener(sublime_plugin.EventListener):
     output = runner.run(path).splitlines()
     return output
 
-  def do_in_file_check(self, view):
+  def mark_issues(self, view, mark):
     self.clear_marks(view)
-    if not sublime.load_settings(SETTINGS_FILE).get('mark_issues_in_view'):
-      return
+    if mark:
+      results = self.run_rubocop(view.file_name())
+      self.set_marks_by_results(view, results)
+
+  def do_in_file_check(self, view):
     if not FileTools.is_ruby_file(view.file_name()):
       return
-    results = self.run_rubocop(view.file_name())
-    self.set_marks_by_results(view, results)
+    mark = sublime.load_settings(SETTINGS_FILE).get('mark_issues_in_view')
+    self.mark_issues(view, mark)
 
   def on_post_save(self, view):
     if sublime.version() >= '3000':
