@@ -82,7 +82,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
     rvm_path = s.get('rvm_auto_ruby_path')
     rbenv_path = s.get('rbenv_path')
     runner = RubocopRunner(use_rbenv, use_rvm, cmd, rvm_path, rbenv_path)
-    output = runner.run(path).splitlines()
+    output = runner.run(path, '--format emacs').splitlines()
     return output
 
   def mark_issues(self, view, mark):
