@@ -18,15 +18,15 @@ else:
   from rubocop_runner import RubocopRunner
   from constants import *
 
-current_instance = None
+listener_instance = None
 
 # Event listener to provide on the fly checks when saving a ruby file.
 class RubocopEventListener(sublime_plugin.EventListener):
   def __init__(self):
-    global current_instance
+    global listener_instance
     super(RubocopEventListener, self).__init__()
     self.file_remark_dict = {}
-    current_instance = self
+    listener_instance = self
 
   def get_current_file_dict(self, view):
     if not (view.file_name() in self.file_remark_dict.keys()):
