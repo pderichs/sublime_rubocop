@@ -40,6 +40,11 @@ class RubocopEventListener(sublime_plugin.EventListener):
       dct.clear()
     view.erase_regions(REGIONS_ID)
 
+  def update_marks(self):
+    for wnd in sublime.windows():
+      for vw in wnd.views():
+        self.do_in_file_check(vw)
+
   def line_no_of_cop_result(self, file_name, result):
     res = result.decode(locale.getpreferredencoding())
     reg_result = re.search(r"^([^:]+):([0-9]*):.*:(.*)", res)

@@ -84,9 +84,7 @@ class RubocopPauseToggleCommand(RubocopCommand):
     mark_issues_in_view = s.get('mark_issues_in_view')
     s.set('mark_issues_in_view', not mark_issues_in_view)
     sublime.save_settings(SETTINGS_FILE)
-    for wnd in sublime.windows():
-      for vw in wnd.views():
-        listener_instance.do_in_file_check(vw)
+    listener_instance.update_marks()
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):
