@@ -11,12 +11,12 @@ if sublime.version() >= '3000':
   from RuboCop.file_tools import FileTools
   from RuboCop.rubocop_runner import RubocopRunner
   from RuboCop.constants import *
-  from RuboCop.rubocop_listener import listener_instance
+  from RuboCop.rubocop_listener import RubocopEventListener
 else:
   from file_tools import FileTools
   from rubocop_runner import RubocopRunner
   from constants import *
-  from rubocop_listener import listener_instance
+  from rubocop_listener import RubocopEventListener
 
 # Base class for all RuboCop commands
 class RubocopCommand(sublime_plugin.TextCommand):
@@ -84,7 +84,7 @@ class RubocopPauseToggleCommand(RubocopCommand):
     mark_issues_in_view = s.get('mark_issues_in_view')
     s.set('mark_issues_in_view', not mark_issues_in_view)
     sublime.save_settings(SETTINGS_FILE)
-    listener_instance.update_marks()
+    RubocopEventListener.instance().update_marks()
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):

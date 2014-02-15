@@ -18,15 +18,20 @@ else:
   from rubocop_runner import RubocopRunner
   from constants import *
 
-listener_instance = None
-
 # Event listener to provide on the fly checks when saving a ruby file.
 class RubocopEventListener(sublime_plugin.EventListener):
+  listener_instance = None
+
   def __init__(self):
-    global listener_instance
     super(RubocopEventListener, self).__init__()
     self.file_remark_dict = {}
-    listener_instance = self
+    RubocopEventListener.listener_instance = self
+    if sublime.version() >= '3000':
+      sublime.set_timeout_async(self.update_marks, 2)
+
+  @classmethod
+  def instance(cls):
+    return cls.listener_instance
 
   def get_current_file_dict(self, view):
     if not (view.file_name() in self.file_remark_dict.keys()):
@@ -67,8 +72,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
         view_dict[ln] = message
         line = view.line(view.text_point(ln, 0))
         lines.append(sublime.Region(line.begin(), line.end()))
-    view.add_regions(REGIONS_ID, lines, 'invalid', 'circle', 
-      sublime.PERSISTENT)
+    view.add_regions(REGIONS_ID, lines, 'invalid', 'circle')
 
   def run_rubocop(self, path):
     s = sublime.load_settings(SETTINGS_FILE)
