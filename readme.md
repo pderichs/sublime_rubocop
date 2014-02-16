@@ -1,8 +1,8 @@
 # Sublime RuboCop
 
-A Sublime Text plugin that runs a [RuboCop](https://github.com/bbatsov/rubocop) check on the current file or the current project.
+A [Sublime Text](http://www.sublimetext.com/) plugin that runs [RuboCop](https://github.com/bbatsov/rubocop) on your Ruby files in the editor. It will mark issues right inside the view but it can also be called as a "compiler" from the ST menu.
 
-The Plugin currently supports both ST2 and ST3, but the usage of ST3 is recommended.
+The Plugin currently supports both ST2 and ST3, but the usage of ST3 is strongly recommended.
 
 ## Installation
 
@@ -18,19 +18,13 @@ Alternative way:
 
 3. Restart Sublime Text.
 
-## Features
+## What can it do?
 
-You can run RuboCop from the ST menu in many ways. If there are any issues, they will be shown and you can double click each issue to jump directly to the source code location.
-
-### ST3
-
-In ST3 each file gets automatically checked when it is loaded and saved. Issues will be marked right inside the view. You can disable automatic checking in the settings (see ```mark_issues_in_view```).
+By default, the plugin marks RuboCop issues right in the view when you open or save a Ruby file. Additionally you can run RuboCop from the ST menu in many ways. For example you can perform a RuboCop check on all files of the current project to get a general overview. The issues will be listed inside the Sublime output window, so you can easily navigate to each of them.
 
 ### ST2
 
-The Plugin will check ruby files when you save them and mark issues right inside the view.
-
-**Note**: If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```mark_issues_in_view```).
+Due to performance issues the plugin behaves a bit different under ST2. It will run RuboCop only when you **save** files. If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```mark_issues_in_view```).
 
 ## Environment
 
