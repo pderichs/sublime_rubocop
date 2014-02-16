@@ -102,5 +102,11 @@
   {
     "caption": "RuboCop: Check all open Ruby files (run extra Rails cops)",
     "command": "rubocop_check_open_files_rails"
+  },
+
+  // ------ Auto correction -----
+  {
+    "caption": "RuboCop: Auto correct current file",
+    "command": "rubocop_auto_correct"
   }
 ]

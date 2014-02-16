@@ -6,6 +6,7 @@
 import sublime_plugin
 import sublime
 import os
+import tempfile
 
 if sublime.version() >= '3000':
   from RuboCop.file_tools import FileTools
@@ -31,8 +32,8 @@ class RubocopCommand(sublime_plugin.TextCommand):
     rvm_auto_ruby_path = s.get('rvm_auto_ruby_path')
     rbenv_path = s.get('rbenv_path')
 
-    runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command, rvm_auto_ruby_path, rbenv_path)
-    self.rubocop_command = runner.command_string() + ' {options} {path}'
+    self.runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command, rvm_auto_ruby_path, rbenv_path)
+    self.rubocop_command = self.runner.command_string() + ' {options} {path}'
 
   def used_options(self):
     return ''
@@ -85,6 +86,53 @@ class RubocopPauseToggleCommand(RubocopCommand):
     s.set('mark_issues_in_view', not mark_issues_in_view)
     sublime.save_settings(SETTINGS_FILE)
     RubocopEventListener.instance().update_marks()
+
+# Calling autocorrect on the current file
+class RubocopAutoCorrectCommand(RubocopCommand):
+  def run(self, edit):
+    super(RubocopAutoCorrectCommand, self).run(edit)
+    view = self.view
+    path = view.file_name()
+    quoted_file_path = FileTools.quote(path)
+
+    if view.is_read_only():
+      sublime.message_dialog('RuboCop: Unable to run auto correction on a read only buffer.')
+      return
+
+    # Inform user about unsaved contents of current buffer
+    cancel_op = False
+    if view.is_dirty():
+      warn_msg = 'RuboCop: The curent buffer is modified. Save the file and continue?'
+      cancel_op = not sublime.ok_cancel_dialog(warn_msg)
+
+    if cancel_op:
+      return
+    else:
+      # Save the file
+      view.run_command('save')
+
+    # Copy the current file to a temp file
+    content = view.substr(sublime.Region(0, view.size()))
+    f = tempfile.NamedTemporaryFile()
+    f.write(bytes(content, view.encoding()))
+    f.flush()
+
+    # Run rubocop with auto-correction on temp file
+    self.runner.run(f.name, '-a')
+
+    # Read contents of file
+    f.seek(0)
+    content = f.read().decode(view.encoding())
+
+    # Overwrite buffer contents (without saving!)
+    rgn = sublime.Region(0, view.size())
+    view.replace(edit, rgn, content)
+
+    # TempFile will be deleted here
+    f.close()
+
+    view.run_command('save')
+    sublime.status_message('RuboCop: Auto correction done.')
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):
