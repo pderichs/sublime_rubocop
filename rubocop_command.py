@@ -123,7 +123,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
 
     # Read contents of file
     f.seek(0)
-    content = self.read_from_file(f)
+    content = self.read_from_file(f, view)
 
     # Overwrite buffer contents (without saving!)
     rgn = sublime.Region(0, view.size())
@@ -141,7 +141,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
       return
     f.write(bytes(content, view.encoding()))
 
-  def read_from_file(self, f):
+  def read_from_file(self, f, view):
     if sublime.version() < '3000':
       return f.read()
     return f.read().decode(view.encoding())
