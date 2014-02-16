@@ -114,7 +114,8 @@ class RubocopAutoCorrectCommand(RubocopCommand):
     # Copy the current file to a temp file
     content = view.substr(sublime.Region(0, view.size()))
     f = tempfile.NamedTemporaryFile()
-    f.write(bytes(content, view.encoding()))
+
+    self.write_to_file(f, content, view)
     f.flush()
 
     # Run rubocop with auto-correction on temp file
@@ -122,7 +123,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
 
     # Read contents of file
     f.seek(0)
-    content = f.read().decode(view.encoding())
+    content = self.read_from_file(f)
 
     # Overwrite buffer contents (without saving!)
     rgn = sublime.Region(0, view.size())
@@ -133,6 +134,17 @@ class RubocopAutoCorrectCommand(RubocopCommand):
 
     view.run_command('save')
     sublime.status_message('RuboCop: Auto correction done.')
+
+  def write_to_file(self, f, content, view):
+    if sublime.version() < '3000':
+      f.write(content)
+      return
+    f.write(bytes(content, view.encoding()))
+
+  def read_from_file(self, f):
+    if sublime.version() < '3000':
+      return f.read()
+    return f.read().decode(view.encoding())
 
 # Runs a check on the currently opened file.
 class RubocopCheckSingleFileCommand(RubocopCommand):
