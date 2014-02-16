@@ -91,6 +91,11 @@ class RubocopPauseToggleCommand(RubocopCommand):
 class RubocopAutoCorrectCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopAutoCorrectCommand, self).run(edit)
+
+    cancel_op = self.warning_msg()
+    if cancel_op:
+      return
+
     view = self.view
     path = view.file_name()
     quoted_file_path = FileTools.quote(path)
@@ -100,7 +105,6 @@ class RubocopAutoCorrectCommand(RubocopCommand):
       return
 
     # Inform user about unsaved contents of current buffer
-    cancel_op = False
     if view.is_dirty():
       warn_msg = 'RuboCop: The curent buffer is modified. Save the file and continue?'
       cancel_op = not sublime.ok_cancel_dialog(warn_msg)
@@ -108,32 +112,50 @@ class RubocopAutoCorrectCommand(RubocopCommand):
     if cancel_op:
       return
     else:
-      # Save the file
       view.run_command('save')
+
+    RubocopEventListener.instance().clear_marks(view)
 
     # Copy the current file to a temp file
     content = view.substr(sublime.Region(0, view.size()))
     f = tempfile.NamedTemporaryFile()
 
-    self.write_to_file(f, content, view)
-    f.flush()
+    try:
+      self.write_to_file(f, content, view)
+      f.flush()
 
-    # Run rubocop with auto-correction on temp file
-    self.runner.run(f.name, '-a')
+      # Run rubocop with auto-correction on temp file
+      self.runner.run(f.name, '-a')
 
-    # Read contents of file
-    f.seek(0)
-    content = self.read_from_file(f, view)
+      # Read contents of file
+      f.seek(0)
+      content = self.read_from_file(f, view)
 
-    # Overwrite buffer contents (without saving!)
-    rgn = sublime.Region(0, view.size())
-    view.replace(edit, rgn, content)
+      # Overwrite buffer contents
+      rgn = sublime.Region(0, view.size())
+      view.replace(edit, rgn, content)
+    finally:
+      # TempFile will be deleted here
+      f.close()
 
-    # TempFile will be deleted here
-    f.close()
-
-    view.run_command('save')
     sublime.status_message('RuboCop: Auto correction done.')
+
+  def warning_msg(self):
+    cancel_op = False
+    s = sublime.load_settings(SETTINGS_FILE)
+    show_warning = s.get('show_auto_correct_warning')
+    if show_warning:
+      cancel_op = not sublime.ok_cancel_dialog("""
+Attention! You are about to run auto correction on the current file. 
+
+The contents of the current buffer will be overwritten by RuboCop. Afterwards, you need to save these changes manually.
+
+Do you want to continue?
+
+(You can disable this message in the settings.)
+      """)
+
+    return cancel_op
 
   def write_to_file(self, f, content, view):
     if sublime.version() < '3000':

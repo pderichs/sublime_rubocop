@@ -37,5 +37,8 @@
   // of time, so ST2 might be a bit unresponsive when saving. As soon
   // as you encounter performance problems during saving a ruby file you
   // should set this to false.
-  "mark_issues_in_view": true
+  "mark_issues_in_view": true,
+
+  // Auto correct feature warning message
+  "show_auto_correct_warning": true
 }
