@@ -6,11 +6,11 @@ The Plugin currently supports both ST2 and ST3, but the usage of ST3 is strongly
 
 ## Installation
 
-Recommended:
+### Recommended:
 
 Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/package_control).
 
-Manual:
+### Manual:
 
 1. Navigate to the Sublime Text Packages folder (You can find the location of the Packages folder [here](http://docs.sublimetext.info/en/latest/basic_concepts.html#the-data-directory)).
 
