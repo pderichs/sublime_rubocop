@@ -72,7 +72,12 @@ class RubocopEventListener(sublime_plugin.EventListener):
         view_dict[ln] = message
         line = view.line(view.text_point(ln, 0))
         lines.append(sublime.Region(line.begin(), line.end()))
-    view.add_regions(REGIONS_ID, lines, "keyword", "arrow_right",
+    self.mark_lines(view, lines)
+
+  def mark_lines(self, view, lines):
+    s = sublime.load_settings(SETTINGS_FILE)
+    icon = s.get('mark_icon') or 'arrow_right'
+    view.add_regions(REGIONS_ID, lines, 'keyword', icon,
         REGIONS_OPTIONS_BITS)
 
   def run_rubocop(self, path):
