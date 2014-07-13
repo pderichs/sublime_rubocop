@@ -8,7 +8,7 @@ The Plugin currently supports both ST2 and ST3, but the usage of ST3 is strongly
 
 ### Prerequisites
 
-Please make sure, `rubocop` is installed:
+Please make sure `rubocop` is installed:
 
 `gem install rubocop`
 
