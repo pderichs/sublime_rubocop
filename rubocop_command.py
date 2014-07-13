@@ -47,6 +47,9 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
     if not file_list:
       # Single item to check.
+      on_windows = (sublime.platform() == 'windows')
+      if on_windows:
+        path = path.replace('\\', '/')
       quoted_file_path = FileTools.quote(path)
       working_dir = os.path.dirname(quoted_file_path)
     else:
