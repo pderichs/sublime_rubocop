@@ -88,12 +88,14 @@ class RubocopEventListener(sublime_plugin.EventListener):
     rvm_path = s.get('rvm_auto_ruby_path')
     rbenv_path = s.get('rbenv_path')
     runner = RubocopRunner(
-      use_rbenv = use_rbenv,
-      use_rvm = use_rvm,
-      custom_rubocop_cmd = cmd,
-      rvm_auto_ruby_path = rvm_path,
-      rbenv_path = rbenv_path,
-      on_windows = sublime.platform() == 'windows'
+      {
+        'use_rbenv': use_rbenv,
+        'use_rvm': use_rvm,
+        'custom_rubocop_cmd': cmd,
+        'rvm_auto_ruby_path': rvm_path,
+        'rbenv_path': rbenv_path,
+        'on_windows': sublime.platform() == 'windows'
+      }
     )
     output = runner.run(path, '--format emacs').splitlines()
     return output

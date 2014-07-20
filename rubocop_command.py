@@ -27,12 +27,14 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def load_config(self):
     s = sublime.load_settings(SETTINGS_FILE)
     self.runner = RubocopRunner(
-      use_rbenv=s.get('check_for_rbenv'),
-      use_rvm=s.get('check_for_rvm'),
-      custom_rubocop_cmd=s.get('rubocop_command'),
-      rvm_auto_ruby_path=s.get('rvm_auto_ruby_path'),
-      rbenv_path=s.get('rbenv_path'),
-      on_windows=(sublime.platform() == 'windows')
+      {
+        'use_rbenv': s.get('check_for_rbenv'),
+        'use_rvm': s.get('check_for_rvm'),
+        'custom_rubocop_cmd': s.get('rubocop_command'),
+        'rvm_auto_ruby_path': s.get('rvm_auto_ruby_path'),
+        'rbenv_path': s.get('rbenv_path'),
+        'on_windows': (sublime.platform() == 'windows')
+      }
     )
 
   def used_options(self):

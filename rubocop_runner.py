@@ -11,12 +11,11 @@ RBENV_DEFAULT_PATH = '~/.rbenv/bin/rbenv'
 
 class RubocopRunner(object):
   """This class takes care of the rubocop location and its execution"""
-  def __init__(self, *initial_data, **kwargs):
+  def __init__(self, args):
     self.set_default_paths()
     self.on_windows = False
     self.custom_rubocop_cmd = ''
-    for key in kwargs:
-      setattr(self, key, kwargs[key])
+    vars(self).update(args)
 
   def set_default_paths(self):
     self.rvm_auto_ruby_path = RVM_DEFAULT_PATH
