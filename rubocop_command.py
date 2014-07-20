@@ -38,9 +38,6 @@ class RubocopCommand(sublime_plugin.TextCommand):
   def used_options(self):
     return ''
 
-  def command_with_options(self):
-    return self.rubocop_command.replace('{options}', self.used_options())
-
   def run_rubocop_on(self, path, file_list=False):
     if not path:
       return
@@ -55,9 +52,6 @@ class RubocopCommand(sublime_plugin.TextCommand):
       quoted_file_path = ''
       for file in path:
         quoted_file_path += FileTools.quote(file) + ' '
-
-    # cop_command = self.command_with_options()
-    # rubocop_cmd = cop_command.replace('{path}', quoted_file_path)
 
     rubocop_cmd = self.runner.command_string(
       quoted_file_path, self.used_options()
@@ -130,6 +124,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
       # Create path for possible config file in the source directory
       quoted_file_path = FileTools.quote(path)
       config_opt = '-c ' + os.path.dirname(quoted_file_path) + '/.rubocop.yml'
+      print(config_opt)
 
       # Run rubocop with auto-correction on temp file
       self.runner.run(f.name, '-a ' + config_opt)

@@ -14,6 +14,7 @@ class RubocopRunner(object):
   def __init__(self, *initial_data, **kwargs):
     self.set_default_paths()
     self.on_windows = False
+    self.custom_rubocop_cmd = ''
     for key in kwargs:
       setattr(self, key, kwargs[key])
 
