@@ -32,7 +32,13 @@ class RubocopCommand(sublime_plugin.TextCommand):
     rvm_auto_ruby_path = s.get('rvm_auto_ruby_path')
     rbenv_path = s.get('rbenv_path')
 
-    self.runner = RubocopRunner(use_rbenv, use_rvm, self.rubocop_command, rvm_auto_ruby_path, rbenv_path)
+    self.runner = RubocopRunner(
+      use_rbenv,
+      use_rvm,
+      self.rubocop_command,
+      rvm_auto_ruby_path,
+      rbenv_path
+    )
     self.rubocop_command = self.runner.command_string() + ' {options} {path}'
 
   def used_options(self):
@@ -154,7 +160,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
     show_warning = s.get('show_auto_correct_warning')
     if show_warning:
       cancel_op = not sublime.ok_cancel_dialog("""
-Attention! You are about to run auto correction on the current file. 
+Attention! You are about to run auto correction on the current file.
 
 The contents of the current buffer will be overwritten by RuboCop. Afterwards, you need to save these changes manually.
 

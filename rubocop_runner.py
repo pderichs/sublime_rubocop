@@ -11,20 +11,32 @@ RBENV_DEFAULT_PATH = '~/.rbenv/bin/rbenv'
 
 class RubocopRunner(object):
   """This class takes care of the rubocop location and its execution"""
-  def __init__(self, use_rbenv, use_rvm, custom_rubocop_cmd, rvm_auto_ruby_path=None, rbenv_path=None):
-    self.use_rvm = use_rvm
-    self.use_rbenv = use_rbenv
-    self.custom_rubocop_cmd = custom_rubocop_cmd
+  def __init__(self, *initial_data, **kwargs):
+    self.set_default_paths()
+    for dictionary in initial_data:
+      for key in dictionary:
+        setattr(self, key, dictionary[key])
+    for key in kwargs:
+      setattr(self, key, kwargs[key])
 
-    if rvm_auto_ruby_path is None:
-      self.rvm_auto_ruby_path = RVM_DEFAULT_PATH
-    else:
-      self.rvm_auto_ruby_path = rvm_auto_ruby_path
+  def set_default_paths(self):
+    self.rvm_auto_ruby_path = RVM_DEFAULT_PATH
+    self.rbenv_path = RBENV_DEFAULT_PATH
 
-    if rbenv_path is None:
-      self.rbenv_path = RBENV_DEFAULT_PATH
-    else:
-      self.rbenv_path = rbenv_path
+  # def __init__(self, use_rbenv, use_rvm, custom_rubocop_cmd, rvm_auto_ruby_path=None, rbenv_path=None):
+    # self.use_rvm = use_rvm
+    # self.use_rbenv = use_rbenv
+    # self.custom_rubocop_cmd = custom_rubocop_cmd
+
+    # if rvm_auto_ruby_path is None:
+    #   self.rvm_auto_ruby_path = RVM_DEFAULT_PATH
+    # else:
+    #   self.rvm_auto_ruby_path = rvm_auto_ruby_path
+
+    # if rbenv_path is None:
+    #   self.rbenv_path = RBENV_DEFAULT_PATH
+    # else:
+    #   self.rbenv_path = rbenv_path
 
   def load_cmd_prefix(self):
     self.cmd_prefix = ''
