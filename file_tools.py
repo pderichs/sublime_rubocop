@@ -19,7 +19,9 @@ class FileTools(object):
 
   @staticmethod
   def is_ruby_file(path):
+    if not path:
+      return False
     name, ext = os.path.splitext(path)
-    if ext == '.rb': 
+    if ext == '.rb':
       return True
     return False
