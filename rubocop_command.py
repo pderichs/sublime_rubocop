@@ -26,20 +26,14 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
   def load_config(self):
     s = sublime.load_settings(SETTINGS_FILE)
-    use_rvm = s.get('check_for_rvm')
-    use_rbenv = s.get('check_for_rbenv')
-    self.rubocop_command = s.get('rubocop_command')
-    rvm_auto_ruby_path = s.get('rvm_auto_ruby_path')
-    rbenv_path = s.get('rbenv_path')
-
     self.runner = RubocopRunner(
-      use_rbenv,
-      use_rvm,
-      self.rubocop_command,
-      rvm_auto_ruby_path,
-      rbenv_path
+      use_rbenv=s.get('check_for_rbenv'),
+      use_rvm=s.get('check_for_rvm'),
+      custom_rubocop_cmd=s.get('rubocop_command'),
+      rvm_auto_ruby_path=s.get('rvm_auto_ruby_path'),
+      rbenv_path=s.get('rbenv_path'),
+      on_windows=(sublime.platform() == 'windows')
     )
-    self.rubocop_command = self.runner.command_string() + ' {options} {path}'
 
   def used_options(self):
     return ''
@@ -53,9 +47,6 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
     if not file_list:
       # Single item to check.
-      on_windows = (sublime.platform() == 'windows')
-      if on_windows:
-        path = path.replace('\\', '/')
       quoted_file_path = FileTools.quote(path)
       working_dir = os.path.dirname(quoted_file_path)
     else:
@@ -65,9 +56,12 @@ class RubocopCommand(sublime_plugin.TextCommand):
       for file in path:
         quoted_file_path += FileTools.quote(file) + ' '
 
-    cop_command = self.command_with_options()
-    rubocop_cmd = cop_command.replace('{path}', quoted_file_path)
+    # cop_command = self.command_with_options()
+    # rubocop_cmd = cop_command.replace('{path}', quoted_file_path)
 
+    rubocop_cmd = self.runner.command_string(
+      quoted_file_path, self.used_options()
+    )
     self.run_shell_command(rubocop_cmd, working_dir)
 
   def run_shell_command(self, command, working_dir='.'):

@@ -57,25 +57,33 @@ class RuboCopRunnerTests(unittest.TestCase):
 
   def test_command_list_rvm(self):
     runner = RubocopRunner(use_rbenv=False, use_rvm=True, custom_rubocop_cmd='')
-    lst = runner.command_list()
-    self.assertEqual(len(lst), 3)
+    lst = runner.command_list('some_path')
+    self.assertEqual(len(lst), 4)
     self.assertTrue(lst[0].endswith(RVM_PATH))
     self.assertEqual(lst[1], '-S')
     self.assertEqual(lst[2], 'rubocop')
+    self.assertEqual(lst[3], 'some_path')
 
   def test_command_list_rbenv(self):
     runner = RubocopRunner(use_rbenv=True, use_rvm=False, custom_rubocop_cmd='')
-    lst = runner.command_list()
-    self.assertEqual(len(lst), 3)
+    lst = runner.command_list('some_path')
+    self.assertEqual(len(lst), 4)
     self.assertTrue(lst[0].endswith(RBENV_PATH))
     self.assertEqual(lst[1], 'exec')
     self.assertEqual(lst[2], 'rubocop')
+    self.assertEqual(lst[3], 'some_path')
 
   def test_command_list_custom(self):
     runner = RubocopRunner(use_rbenv=False, use_rvm=False,custom_rubocop_cmd='666')
-    self.assertEqual(runner.command_list(), ['666'])
+    self.assertEqual(runner.command_list('some_path'), ['666', 'some_path'])
 
-  # TODO: Test run method
+  def test_on_windows_behavior_if_on_windows(self):
+    runner = RubocopRunner(use_rbenv=False, use_rvm=False,custom_rubocop_cmd='666',on_windows=True)
+    self.assertEqual(runner.command_list('some\windows\style\path'), ['666', 'some/windows/style/path'])
+
+  def test_on_windows_behavior_if_not_on_windows(self):
+    runner = RubocopRunner(use_rbenv=False, use_rvm=False,custom_rubocop_cmd='666',on_windows=False)
+    self.assertEqual(runner.command_list('some\windows\style\path'), ['666', 'some\windows\style\path'])
 
 def main():
   unittest.main()
