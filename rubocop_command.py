@@ -130,7 +130,6 @@ class RubocopAutoCorrectCommand(RubocopCommand):
       # Create path for possible config file in the source directory
       quoted_file_path = FileTools.quote(path)
       config_opt = '-c ' + os.path.dirname(quoted_file_path) + '/.rubocop.yml'
-      print(config_opt)
 
       # Run rubocop with auto-correction on temp file
       self.runner.run(f.name, '-a ' + config_opt)
