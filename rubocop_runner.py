@@ -14,9 +14,6 @@ class RubocopRunner(object):
   def __init__(self, *initial_data, **kwargs):
     self.set_default_paths()
     self.on_windows = False
-    for dictionary in initial_data:
-      for key in dictionary:
-        setattr(self, key, dictionary[key])
     for key in kwargs:
       setattr(self, key, kwargs[key])
 
@@ -57,7 +54,7 @@ class RubocopRunner(object):
     else:
       cmd = self.custom_rubocop_cmd
     if options:
-      cmd = cmd + options
+      cmd = cmd + ' ' + options
     if path:
       if self.on_windows:
         path = path.replace('\\', '/')

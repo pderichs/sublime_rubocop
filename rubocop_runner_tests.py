@@ -85,6 +85,10 @@ class RuboCopRunnerTests(unittest.TestCase):
     runner = RubocopRunner(use_rbenv=False, use_rvm=False,custom_rubocop_cmd='666',on_windows=False)
     self.assertEqual(runner.command_list('some\windows\style\path'), ['666', 'some\windows\style\path'])
 
+  def test_command_list_with_options(self):
+    runner = RubocopRunner(use_rbenv=False, use_rvm=False,custom_rubocop_cmd='666')
+    self.assertEqual(runner.command_list('some_path', '--my_option'), ['666', '--my_option', 'some_path'])
+
 def main():
   unittest.main()
 
