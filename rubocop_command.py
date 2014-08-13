@@ -26,6 +26,9 @@ class RubocopCommand(sublime_plugin.TextCommand):
 
   def load_config(self):
     s = sublime.load_settings(SETTINGS_FILE)
+    cfg_file = s.get('rubocop_config_file')
+    if cfg_file:
+      cfg_file = FileTools.quote(cfg_file)
     self.runner = RubocopRunner(
       {
         'use_rbenv': s.get('check_for_rbenv'),
@@ -33,7 +36,8 @@ class RubocopCommand(sublime_plugin.TextCommand):
         'custom_rubocop_cmd': s.get('rubocop_command'),
         'rvm_auto_ruby_path': s.get('rvm_auto_ruby_path'),
         'rbenv_path': s.get('rbenv_path'),
-        'on_windows': (sublime.platform() == 'windows')
+        'on_windows': (sublime.platform() == 'windows'),
+        'rubocop_config_file': cfg_file
       }
     )
 

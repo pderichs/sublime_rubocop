@@ -87,6 +87,9 @@ class RubocopEventListener(sublime_plugin.EventListener):
     cmd = s.get('rubocop_command')
     rvm_path = s.get('rvm_auto_ruby_path')
     rbenv_path = s.get('rbenv_path')
+    cfg_file = s.get('rubocop_config_file')
+    if cfg_file:
+      cfg_file = FileTools.quote(cfg_file)
     runner = RubocopRunner(
       {
         'use_rbenv': use_rbenv,
@@ -94,7 +97,8 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'custom_rubocop_cmd': cmd,
         'rvm_auto_ruby_path': rvm_path,
         'rbenv_path': rbenv_path,
-        'on_windows': sublime.platform() == 'windows'
+        'on_windows': sublime.platform() == 'windows',
+        'rubocop_config_file': cfg_file
       }
     )
     output = runner.run(path, '--format emacs').splitlines()

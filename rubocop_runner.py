@@ -15,6 +15,7 @@ class RubocopRunner(object):
     self.set_default_paths()
     self.on_windows = False
     self.custom_rubocop_cmd = ''
+    self.rubocop_config_file = ''
     vars(self).update(args)
 
   def set_default_paths(self):
@@ -55,6 +56,8 @@ class RubocopRunner(object):
       cmd = self.custom_rubocop_cmd
     if options:
       cmd = cmd + ' ' + options
+    if self.rubocop_config_file:
+      cmd = cmd + ' -c ' + self.rubocop_config_file
     if path:
       if self.on_windows:
         path = path.replace('\\', '/')

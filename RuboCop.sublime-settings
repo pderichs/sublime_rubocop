@@ -33,12 +33,15 @@
   // If you want issues to be marked automatically inside the view
   // set this to true.
   //
-  // Attention ST2 users: Using that functionality consumes a bit 
+  // Attention ST2 users: Using that functionality consumes a bit
   // of time, so ST2 might be a bit unresponsive when saving. As soon
   // as you encounter performance problems during saving a ruby file you
   // should set this to false.
   "mark_issues_in_view": true,
 
   // Auto correct feature warning message
-  "show_auto_correct_warning": true
+  "show_auto_correct_warning": true,
+
+  // Optional general config file for rubocop.
+  "rubocop_config_file": ""
 }
