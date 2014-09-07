@@ -95,7 +95,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopAutoCorrectCommand, self).run(edit)
 
-    cancel_op = self.warning_msg()
+    cancel_op = self.user_wants_to_cancel()
     if cancel_op:
       return
 
@@ -119,51 +119,28 @@ class RubocopAutoCorrectCommand(RubocopCommand):
 
     RubocopEventListener.instance().clear_marks(view)
 
-    # Copy the current file to a temp file
-    content = view.substr(sublime.Region(0, view.size()))
-    f = tempfile.NamedTemporaryFile()
+    quoted_file_path = FileTools.quote(path)
 
-    try:
-      self.write_to_file(f, content, view)
-      f.flush()
-
-      # Create path for possible config file in the source directory
-      quoted_file_path = FileTools.quote(path)
-      config_opt = '-c ' + os.path.dirname(quoted_file_path) + '/.rubocop.yml'
-      print(config_opt)
-
-      # Run rubocop with auto-correction on temp file
-      self.runner.run(f.name, '-a ' + config_opt)
-
-      # Read contents of file
-      f.seek(0)
-      content = self.read_from_file(f, view)
-
-      # Overwrite buffer contents
-      rgn = sublime.Region(0, view.size())
-      view.replace(edit, rgn, content)
-    finally:
-      # TempFile will be deleted here
-      f.close()
+    # Run rubocop with auto-correction
+    self.runner.run(quoted_file_path, '-a')
 
     sublime.status_message('RuboCop: Auto correction done.')
 
-  def warning_msg(self):
-    cancel_op = False
+  def user_wants_to_cancel(self):
     s = sublime.load_settings(SETTINGS_FILE)
     show_warning = s.get('show_auto_correct_warning')
-    if show_warning:
-      cancel_op = not sublime.ok_cancel_dialog("""
+    if not show_warning:
+      return False
+
+    return not sublime.ok_cancel_dialog("""
 Attention! You are about to run auto correction on the current file.
 
-The contents of the current buffer will be overwritten by RuboCop. Afterwards, you need to save these changes manually.
+The contents of the current file will be modified/overwritten by RuboCop.
 
 Do you want to continue?
 
-(You can disable this message in the settings.)
+(You can disable this warning message in the settings.)
       """)
-
-    return cancel_op
 
   def write_to_file(self, f, content, view):
     if sublime.version() < '3000':
