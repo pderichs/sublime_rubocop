@@ -51,7 +51,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if not file_list:
       # Single item to check.
       quoted_file_path = FileTools.quote(path)
-      working_dir = os.path.dirname(quoted_file_path)
+      working_dir = os.path.dirname(path)
     else:
       # Multiple files to check.
       working_dir = '.'
