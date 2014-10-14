@@ -44,21 +44,24 @@ class RubocopRunner(object):
     return out
 
   def command_string(self, path, options=''):
+    list = self.command_list(path, options)
+    return " ".join(list)
+
+  def command_list(self, path, options=''):
+    result = []
     if not self.custom_rubocop_cmd:
       self.load_cmd_prefix()
-      cmd = self.cmd_prefix + ' rubocop'
+      result += self.cmd_prefix.split()
+      result.append('rubocop')
     else:
-      cmd = self.custom_rubocop_cmd
+      result.append(self.custom_rubocop_cmd)
     if options:
-      cmd = cmd + ' ' + options
+      result = result + options.split()
     if self.rubocop_config_file:
-      cmd = cmd + ' -c ' + self.rubocop_config_file
+      result.append('-c')
+      result.append(self.rubocop_config_file)
     if path:
       if self.on_windows:
         path = path.replace('\\', '/')
-      cmd = cmd + ' ' + path
-    return cmd
-
-  def command_list(self, path, options=''):
-    cmd = self.command_string(path, options)
-    return cmd.split()
+      result.append(path)
+    return result

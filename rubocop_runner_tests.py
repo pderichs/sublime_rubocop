@@ -93,6 +93,10 @@
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
 #     self.assertEqual(runner.command_list('some_path', '--my_option'), ['666', '--my_option', '-c', 'xyz', 'some_path'])
 
+#   def test_command_list_with_file_name_which_contains_spaces(self):
+#     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
+#     self.assertEqual(runner.command_list('my file name.rb', '--my_option'), ['666', '--my_option', '-c', 'xyz', 'my file name.rb'])
+
 # def main():
 #   unittest.main()
 
