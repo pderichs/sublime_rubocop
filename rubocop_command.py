@@ -1,8 +1,3 @@
-# Sublime RuboCop plugin
-#
-# Author: Patrick Derichs (patderichs@gmail.com)
-# License: MIT (http://opensource.org/licenses/MIT)
-
 import sublime_plugin
 import sublime
 import os
