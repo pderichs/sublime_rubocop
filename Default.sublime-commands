@@ -109,9 +109,12 @@
     "caption": "RuboCop: Auto correct current file",
     "command": "rubocop_auto_correct"
   },
-
   {
     "caption": "RuboCop: Open all offensive files in the current project",
     "command": "rubocop_open_all_offensive_files"
+  },
+  {
+    "caption": "RuboCop: Offense Count in current project",
+    "command": "rubocop_project_offense_count"
   }
 ]
