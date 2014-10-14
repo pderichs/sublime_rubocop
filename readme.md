@@ -26,7 +26,11 @@ Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/
 
 ## What can it do for you?
 
-By default, the plugin marks RuboCop issues right in the view when you open or save a Ruby file. Additionally you can run RuboCop from the ST menu in many ways. For example you can perform a RuboCop check on all files of the current project to get a general overview. The issues will be listed inside the Sublime output window, so you can easily navigate to each of them.
+By default, the plugin marks RuboCop issues right in the view when you open or save a Ruby file.
+
+Additionally you can run RuboCop from the ST menu in many ways. For example you can perform a RuboCop check on all files of the current project to get a general overview. The issues will be listed inside the Sublime output window, so you can easily navigate to each of them.
+
+You can also run the RuboCop auto correction for the current file from the Sublime Text menu.
 
 ### ST2
 
