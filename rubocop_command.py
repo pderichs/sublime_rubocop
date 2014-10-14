@@ -252,8 +252,6 @@ class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
     # Run rubocop with file formatter
     file_list = self.runner.run(folder, '--format files').splitlines()
 
-    print(file_list)
-
     for path in file_list:
       self.view.window().open_file(path.decode(locale.getpreferredencoding()))
 
