@@ -1,7 +1,7 @@
 import sublime_plugin
 import sublime
 import os
-import tempfile
+import locale
 
 if sublime.version() >= '3000':
   from RuboCop.file_tools import FileTools
@@ -236,3 +236,25 @@ class RubocopCheckFileFolderRailsCommand(RubocopCheckFileFolderCommand):
 class RubocopCheckOpenFilesRailsCommand(RubocopCheckOpenFilesCommand):
   def used_options(self):
     return '-R'
+
+# Opens all offensive files in the current project
+class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
+  def run(self, edit):
+    super(RubocopOpenAllOffensiveFilesCommand, self).run(edit)
+
+    folders = self.view.window().folders()
+    if len(folders) <= 0:
+      sublime.status_message('RuboCop: No project folder available.')
+      return
+
+    folder = FileTools.quote(folders[0])
+
+    # Run rubocop with file formatter
+    file_list = self.runner.run(folder, '--format files').splitlines()
+
+    print(file_list)
+
+    for path in file_list:
+      self.view.window().open_file(path.decode(locale.getpreferredencoding()))
+
+    sublime.status_message('RuboCop: Opened ' + str(len(file_list)) + ' files.')
