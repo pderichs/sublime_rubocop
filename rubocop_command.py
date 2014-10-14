@@ -259,7 +259,7 @@ class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
 
     sublime.status_message('RuboCop: Opened ' + str(len(file_list)) + ' files.')
 
-# Runs a check on all open files (Rails)
+# Shows the offense count by type
 class RubocopProjectOffenseCountCommand(RubocopCheckProjectCommand):
   def used_options(self):
     return '--format offenses'
