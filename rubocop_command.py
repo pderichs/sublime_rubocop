@@ -54,8 +54,9 @@ class RubocopCommand(sublime_plugin.TextCommand):
       for file in path:
         quoted_file_path += FileTools.quote(file) + ' '
 
-    rubocop_cmd = self.runner.command_string(
-      quoted_file_path, self.used_options()
+    rubocop_cmd = self.runner.command_list(
+      quoted_file_path,
+      self.used_options()
     )
     self.run_shell_command(rubocop_cmd, working_dir)
 
@@ -64,7 +65,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
       return
 
     self.view.window().run_command('exec', {
-      'cmd': [command],
+      'cmd': command,
       'shell': True,
       'working_dir': working_dir,
       'file_regex': r"^([^:]+):([0-9]*)",
