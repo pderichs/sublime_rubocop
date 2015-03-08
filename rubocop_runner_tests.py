@@ -101,6 +101,11 @@
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
 #     self.assertEqual(runner.command_list(['my file name.rb'], ['--my_option']), ['666', '--my_option', '-c', 'xyz', 'my file name.rb'])
 
+#   def test_command_string_returns_the_expected_string(self):
+#     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
+#     self.assertEqual(runner.command_string(['my file name.rb'], ['--my_option']), '666 --my_option -c xyz my file name.rb')
+
+
 # def main():
 #   unittest.main()
 

@@ -96,7 +96,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'rubocop_config_file': cfg_file
       }
     )
-    output = runner.run(path, '--format emacs').splitlines()
+    output = runner.run([path], ['--format', 'emacs']).splitlines()
     return output
 
   def mark_issues(self, view, mark):

@@ -41,6 +41,8 @@ class RubocopRunner(object):
     p = subprocess.Popen(call_list,
       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
+    # if err is not None:
+    #   print(err)
     return out
 
   def command_string(self, pathlist, options=[]):

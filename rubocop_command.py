@@ -37,33 +37,27 @@ class RubocopCommand(sublime_plugin.TextCommand):
     )
 
   def used_options(self):
-    return ''
+    return []
 
-  def run_rubocop_on(self, path, file_list=False):
-    if not path:
+  def run_rubocop_on(self, pathlist):
+    if len(pathlist) == 0:
       return
 
-    if not file_list:
-      # Single item to check.
-      quoted_file_path = FileTools.quote(path)
-      working_dir = os.path.dirname(path)
-    else:
-      # Multiple files to check.
-      working_dir = '.'
-      quoted_file_path = ''
-      for file in path:
-        quoted_file_path += FileTools.quote(file) + ' '
+    working_dir = '.'
+    if len(pathlist) == 1:
+      working_dir = os.path.dirname(pathlist[0])
 
-    rubocop_cmd = self.runner.command_list(
-      quoted_file_path,
+    quoted_paths = []
+    for path in pathlist:
+      quoted_paths.append(FileTools.quote(path))
+
+    rubocop_cmd = self.runner.command_string(
+      quoted_paths,
       self.used_options()
     )
     self.run_shell_command(rubocop_cmd, working_dir)
 
   def run_shell_command(self, command, working_dir='.'):
-    if not command:
-      return
-
     self.view.window().run_command('exec', {
       'cmd': command,
       'shell': True,
@@ -154,7 +148,7 @@ class RubocopCheckSingleFileCommand(RubocopCommand):
   def run(self, edit):
     super(RubocopCheckSingleFileCommand, self).run(edit)
     file_path = self.view.file_name()
-    self.run_rubocop_on(file_path)
+    self.run_rubocop_on([file_path])
 
 # Runs a check on the currently opened project.
 class RubocopCheckProjectCommand(RubocopCommand):
@@ -162,7 +156,7 @@ class RubocopCheckProjectCommand(RubocopCommand):
     super(RubocopCheckProjectCommand, self).run(edit)
     folders = self.view.window().folders()
     if len(folders) > 0:
-      self.run_rubocop_on(folders[0])
+      self.run_rubocop_on([folders[0]])
     else:
       sublime.status_message('RuboCop: No project folder available.')
 
@@ -172,7 +166,7 @@ class RubocopCheckFileFolderCommand(RubocopCommand):
     super(RubocopCheckFileFolderCommand, self).run(edit)
     file_path = self.view.file_name()
     project_folder = os.path.dirname(file_path)
-    self.run_rubocop_on(project_folder)
+    self.run_rubocop_on([project_folder])
 
 # Runs a check on all open files.
 class RubocopCheckOpenFilesCommand(RubocopCommand):
@@ -180,7 +174,7 @@ class RubocopCheckOpenFilesCommand(RubocopCommand):
     super(RubocopCheckOpenFilesCommand, self).run(edit)
     files = self.open_ruby_files()
     if len(files) > 0:
-      self.run_rubocop_on(files, True)
+      self.run_rubocop_on(files)
     else:
       sublime.status_message('RuboCop: There are no Ruby files to check.')
 
@@ -199,44 +193,44 @@ class RubocopCheckOpenFilesCommand(RubocopCommand):
 # Runs a check on the current file (only using lint cops)
 class RubocopCheckCurrentFileOnlyWithLintCopsCommand(RubocopCheckSingleFileCommand):
   def used_options(self):
-    return '-l'
+    return ['-l']
 
 # Runs a check on the current project (only using lint cops)
 class RubocopCheckProjectOnlyWithLintCopsCommand(RubocopCheckProjectCommand):
   def used_options(self):
-    return '-l'
+    return ['-l']
 
 # Runs a check on the current project (only using lint cops)
 class RubocopCheckFileFolderOnlyWithLintCopsCommand(RubocopCheckFileFolderCommand):
   def used_options(self):
-    return '-l'
+    return ['-l']
 
 # Runs a check on all open files (only using lint cops)
 class RubocopCheckOpenFilesOnlyWithLintCopsCommand(RubocopCheckOpenFilesCommand):
   def used_options(self):
-    return '-l'
+    return ['-l']
 
 # --------- Rails Cops -------------
 
 # Runs a check on the current file (Rails)
 class RubocopCheckCurrentFileRailsCommand(RubocopCheckSingleFileCommand):
   def used_options(self):
-    return '-R'
+    return ['-R']
 
 # Runs a check on the current project (Rails)
 class RubocopCheckProjectRailsCommand(RubocopCheckProjectCommand):
   def used_options(self):
-    return '-R'
+    return ['-R']
 
 # Runs a check on the current project (Rails)
 class RubocopCheckFileFolderRailsCommand(RubocopCheckFileFolderCommand):
   def used_options(self):
-    return '-R'
+    return ['-R']
 
 # Runs a check on all open files (Rails)
 class RubocopCheckOpenFilesRailsCommand(RubocopCheckOpenFilesCommand):
   def used_options(self):
-    return '-R'
+    return ['-R']
 
 # Opens all offensive files in the current project
 class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
