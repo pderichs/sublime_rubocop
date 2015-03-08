@@ -27,17 +27,21 @@
 #   def test_load_cmd_prefix_rbenv(self):
 #     runner = RubocopRunner({'use_rbenv':True, 'use_rvm':False, 'custom_rubocop_cmd':'xyz'})
 #     prefix = runner.load_cmd_prefix()
-#     self.assertTrue(runner.cmd_prefix.endswith(RBENV_PATH + ' exec'))
+#     l = len(runner.cmd_prefix)
+#     self.assertTrue(runner.cmd_prefix[l - 2].endswith(RBENV_PATH))
+#     self.assertEqual(runner.cmd_prefix[l - 1], 'exec')
 
 #   def test_load_cmd_prefix_rvm(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':True, 'custom_rubocop_cmd':'xyz'})
 #     prefix = runner.load_cmd_prefix()
-#     self.assertTrue(runner.cmd_prefix.endswith(RVM_PATH + ' -S'))
+#     l = len(runner.cmd_prefix)
+#     self.assertTrue(runner.cmd_prefix[l - 2].endswith(RVM_PATH))
+#     self.assertEqual(runner.cmd_prefix[l - 1], '-S')
 
 #   def test_load_cmd_prefix_no_prefix(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':''})
 #     prefix = runner.load_cmd_prefix()
-#     self.assertEqual(runner.cmd_prefix, '')
+#     self.assertEqual(runner.cmd_prefix, [])
 
 #   def test_load_rvm_use_rvm(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':True, 'custom_rubocop_cmd':''})
@@ -57,7 +61,7 @@
 
 #   def test_command_list_rvm(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':True, 'custom_rubocop_cmd':''})
-#     lst = runner.command_list('some_path')
+#     lst = runner.command_list(['some_path'])
 #     self.assertEqual(len(lst), 4)
 #     self.assertTrue(lst[0].endswith(RVM_PATH))
 #     self.assertEqual(lst[1], '-S')
@@ -66,7 +70,7 @@
 
 #   def test_command_list_rbenv(self):
 #     runner = RubocopRunner({'use_rbenv':True, 'use_rvm':False, 'custom_rubocop_cmd':''})
-#     lst = runner.command_list('some_path')
+#     lst = runner.command_list(['some_path'])
 #     self.assertEqual(len(lst), 4)
 #     self.assertTrue(lst[0].endswith(RBENV_PATH))
 #     self.assertEqual(lst[1], 'exec')
@@ -75,27 +79,27 @@
 
 #   def test_command_list_custom(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666'})
-#     self.assertEqual(runner.command_list('some_path'), ['666', 'some_path'])
+#     self.assertEqual(runner.command_list(['some_path']), ['666', 'some_path'])
 
 #   def test_on_windows_behavior_if_on_windows(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','on_windows':True})
-#     self.assertEqual(runner.command_list('some\windows\style\path'), ['666', 'some/windows/style/path'])
+#     self.assertEqual(runner.command_list(['some\windows\style\path']), ['666', 'some/windows/style/path'])
 
 #   def test_on_windows_behavior_if_not_on_windows(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','on_windows':False})
-#     self.assertEqual(runner.command_list('some\windows\style\path'), ['666', 'some\windows\style\path'])
+#     self.assertEqual(runner.command_list(['some\windows\style\path']), ['666', 'some\windows\style\path'])
 
 #   def test_command_list_with_options(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666'})
-#     self.assertEqual(runner.command_list('some_path', '--my_option'), ['666', '--my_option', 'some_path'])
+#     self.assertEqual(runner.command_list(['some_path'], ['--my_option']), ['666', '--my_option', 'some_path'])
 
 #   def test_command_list_with_config_file_setting(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
-#     self.assertEqual(runner.command_list('some_path', '--my_option'), ['666', '--my_option', '-c', 'xyz', 'some_path'])
+#     self.assertEqual(runner.command_list(['some_path'], ['--my_option']), ['666', '--my_option', '-c', 'xyz', 'some_path'])
 
 #   def test_command_list_with_file_name_which_contains_spaces(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','rubocop_config_file':'xyz'})
-#     self.assertEqual(runner.command_list('my file name.rb', '--my_option'), ['666', '--my_option', '-c', 'xyz', 'my file name.rb'])
+#     self.assertEqual(runner.command_list(['my file name.rb'], ['--my_option']), ['666', '--my_option', '-c', 'xyz', 'my file name.rb'])
 
 # def main():
 #   unittest.main()
