@@ -47,9 +47,9 @@ class RubocopEventListener(sublime_plugin.EventListener):
 
   def line_no_of_cop_result(self, file_name, result):
     res = result.decode(locale.getpreferredencoding())
-    reg_result = re.search(r"^([^:]+):([0-9]*):.*:(.*)", res)
+    reg_result = re.search(r"^.*:(\d*):\d*: .: (.*)$", res)
     if reg_result:
-      return reg_result.group(2), reg_result.group(3).strip()
+      return reg_result.group(1), reg_result.group(2).strip()
     return None, None
 
   def set_marks_by_results(self, view, cop_results):
@@ -62,7 +62,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
       self.file_remark_dict[path] = view_dict
     for result in cop_results:
       line_no, message = self.line_no_of_cop_result(base_file, result)
-      if line_no:
+      if line_no is not None:
         ln = int(line_no) - 1
         view_dict[ln] = message
         line = view.line(view.text_point(ln, 0))

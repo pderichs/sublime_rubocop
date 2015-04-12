@@ -81,6 +81,10 @@
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666'})
 #     self.assertEqual(runner.command_list(['some_path']), ['666', 'some_path'])
 
+#   def test_command_list_custom_multiple(self):
+#     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666 foo bar'})
+#     self.assertEqual(runner.command_list(['some_path']), ['666', 'foo', 'bar', 'some_path'])
+
 #   def test_on_windows_behavior_if_on_windows(self):
 #     runner = RubocopRunner({'use_rbenv':False, 'use_rvm':False, 'custom_rubocop_cmd':'666','on_windows':True})
 #     self.assertEqual(runner.command_list(['some\windows\style\path']), ['666', 'some/windows/style/path'])
