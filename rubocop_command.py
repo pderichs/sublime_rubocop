@@ -58,7 +58,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
     for path in pathlist:
       quoted_paths.append(FileTools.quote(path))
 
-    rubocop_cmd = self.runner.command_list(
+    rubocop_cmd = self.runner.command_string(
       quoted_paths,
       self.used_options()
     )
