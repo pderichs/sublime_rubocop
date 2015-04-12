@@ -43,11 +43,31 @@ By default this plugin uses [rvm](https://rvm.io/) to run RuboCop, but you can s
 ## ToDo
 
 * The plugin has been tested within MacOS and Linux, but it has many issues on Windows.
-* RVM: The plugin is not working properly when using custom gemsets
+* As reported by some users the plugin seems to be not working properly when using RVM with custom gemsets.
+
+## Reporting issues
+
+If you encounter an issue, please add some general information about your environment:
+
+* Operating System
+* Sublime Text version
+* How do you run rubocop? Do you use `rbenv`, `rvm` or `your_own_command`?
+
+Please also provide the steps to reproduce the issue.
+
+## Contributing
+
+1. Fork the repo.
+2. Create a branch from the current master branch.
+3. Start hacking.
+4. Create a pull request.
+5. Patience.
 
 ## Credits
 
-Thanks go out to [Will Bond](https://github.com/wbond) for his awesome sample and documentation about ST2 plugins, and thanks go out to the people implementing the [sublime-text-2-ruby-tests Plugin](https://github.com/maltize/sublime-text-2-ruby-tests) - your source gave me some important hints for my implementation.
+Thanks go out to all [contributors](https://github.com/pderichs/sublime_rubocop/graphs/contributors).
+
+Thanks go out to [Will Bond](https://github.com/wbond) for his awesome sample and documentation about ST plugins, and thanks go out to the people implementing the [sublime-text-2-ruby-tests Plugin](https://github.com/maltize/sublime-text-2-ruby-tests) - your source gave me some important hints for my implementation.
 
 ## License
 
