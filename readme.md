@@ -50,7 +50,7 @@ If you encounter an issue, please add some general information about your enviro
 
 * Operating System
 * Sublime Text version
-* How do you run rubocop? Do you use `rbenv`, `rvm` or `your_own_command`?
+* Details about your config e.g. do you use `rbenv`, `rvm` or `your_own_command` to run rubocop?
 
 Please also provide the steps to reproduce the issue.
 
