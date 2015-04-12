@@ -1,5 +1,6 @@
 import os
 import subprocess
+import shlex
 
 RVM_DEFAULT_PATH = '~/.rvm/bin/rvm-auto-ruby'
 RBENV_DEFAULT_PATH = '~/.rbenv/bin/rbenv'
@@ -38,11 +39,12 @@ class RubocopRunner(object):
 
   def run(self, pathlist, options=[]):
     call_list = self.command_list(pathlist, options)
-    p = subprocess.Popen(call_list,
+    # TODO: Add "cwd" parameter (working dir)
+    p = subprocess.Popen(call_list, shell=True,
       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    # if err is not None:
-    #   print(err)
+    if err is not None:
+      print("SublimeRubocop: Unable to run rubocop.")
     return out
 
   def command_string(self, pathlist, options=[]):
@@ -58,7 +60,7 @@ class RubocopRunner(object):
       result += self.cmd_prefix
       result.append('rubocop')
     else:
-      result.append(self.custom_rubocop_cmd)
+      result += shlex.split(self.custom_rubocop_cmd)
 
     # Options
     if options:
