@@ -245,7 +245,7 @@ class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
     folder = FileTools.quote(folders[0])
 
     # Run rubocop with file formatter
-    file_list = self.runner.run(folder, '--format files').splitlines()
+    file_list = self.runner.run([folder], ['--format files']).splitlines()
 
     for path in file_list:
       self.view.window().open_file(path.decode(locale.getpreferredencoding()))
@@ -255,4 +255,4 @@ class RubocopOpenAllOffensiveFilesCommand(RubocopCommand):
 # Shows the offense count by type
 class RubocopProjectOffenseCountCommand(RubocopCheckProjectCommand):
   def used_options(self):
-    return '--format offenses'
+    return ['--format', 'offenses']
