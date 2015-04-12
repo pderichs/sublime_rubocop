@@ -42,7 +42,6 @@ By default this plugin uses [rvm](https://rvm.io/) to run RuboCop, but you can s
 
 ## ToDo
 
-* The plugin has been tested within MacOS and Linux, but it has many issues on Windows.
 * As reported by some users the plugin seems to be not working properly when using RVM with custom gemsets: [issue #19](https://github.com/pderichs/sublime_rubocop/issues/19).
 
 ## Reporting issues
