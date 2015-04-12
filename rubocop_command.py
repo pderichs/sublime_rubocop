@@ -43,15 +43,18 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if len(pathlist) == 0:
       return
 
-    working_dir = '.'
-    if len(pathlist) == 1:
+    working_dir = ''
+    if len(pathlist) >= 1:
       working_dir = os.path.dirname(pathlist[0])
+      if sublime.platform() == 'windows':
+        working_dir = working_dir.replace('\\', '/')
+      print("Working Dir: " + working_dir)
 
     quoted_paths = []
     for path in pathlist:
       quoted_paths.append(FileTools.quote(path))
 
-    rubocop_cmd = self.runner.command_string(
+    rubocop_cmd = self.runner.command_list(
       quoted_paths,
       self.used_options()
     )
