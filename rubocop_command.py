@@ -43,7 +43,13 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if len(pathlist) == 0:
       return
 
-    working_dir = os.path.dirname(pathlist[0])
+    working_dir = ''
+    project = sublime.active_window().project_data()
+    if not (project is None):
+      folders = project['folders']
+        first_folder = folders[0]
+        if 'path' in first_folder:
+          working_dir = first_folder['path'] or ''
     print("SublimeRubocop Working Dir: " + working_dir)
 
     quoted_paths = []
