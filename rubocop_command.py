@@ -112,7 +112,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
     quoted_file_path = FileTools.quote(path)
 
     # Run rubocop with auto-correction
-    self.runner.run(quoted_file_path, '-a')
+    self.runner.run([quoted_file_path], ['-a'])
 
     sublime.status_message('RuboCop: Auto correction done.')
 
