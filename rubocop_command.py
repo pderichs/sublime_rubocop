@@ -43,10 +43,8 @@ class RubocopCommand(sublime_plugin.TextCommand):
     if len(pathlist) == 0:
       return
 
-    working_dir = ''
-    if len(pathlist) >= 1:
-      working_dir = os.path.dirname(pathlist[0])
-      print("Working Dir: " + working_dir)
+    working_dir = os.path.dirname(pathlist[0])
+    print("SublimeRubocop Working Dir: " + working_dir)
 
     quoted_paths = []
     for path in pathlist:
