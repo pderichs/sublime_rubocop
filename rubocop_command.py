@@ -46,8 +46,6 @@ class RubocopCommand(sublime_plugin.TextCommand):
     working_dir = ''
     if len(pathlist) >= 1:
       working_dir = os.path.dirname(pathlist[0])
-      if sublime.platform() == 'windows':
-        working_dir = working_dir.replace('\\', '/')
       print("Working Dir: " + working_dir)
 
     quoted_paths = []
