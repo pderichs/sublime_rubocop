@@ -61,7 +61,7 @@ Please also provide the steps to reproduce the issue.
 2. Create a branch from the current master branch.
 3. Start hacking.
 4. Create a pull request.
-5. Patience.
+5. Patience :relaxed: .
 
 ## Credits
 
