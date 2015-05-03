@@ -62,7 +62,10 @@ class RubocopRunner(object):
       result += self.cmd_prefix
       result.append('rubocop')
     else:
-      result += shlex.split(self.custom_rubocop_cmd)
+      if self.on_windows and self.is_st2:
+        result += self.custom_rubocop_cmd.split()
+      else:
+        result += shlex.split(self.custom_rubocop_cmd)
 
     # Options
     if options:
@@ -77,5 +80,14 @@ class RubocopRunner(object):
       if self.on_windows:
         path = path.replace('\\', '/')
       result.append(path)
+
+    # ST 2 uses Python 2.6.5 which uses CreateProcessA
+    # within subprocess on Windows. Does not work well
+    # with strings including 0 bytes. This is a hack
+    # which just removes 0 bytes from each command part.
+    # This won't work with paths which include unicode
+    # characters.
+    if self.on_windows and self.is_st2:
+      result = map(lambda s:s.replace('\x00', ''), result)
 
     return result

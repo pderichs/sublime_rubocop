@@ -32,7 +32,8 @@ class RubocopCommand(sublime_plugin.TextCommand):
         'rvm_auto_ruby_path': s.get('rvm_auto_ruby_path'),
         'rbenv_path': s.get('rbenv_path'),
         'on_windows': self.on_windows(),
-        'rubocop_config_file': cfg_file
+        'rubocop_config_file': cfg_file,
+        'is_st2': self.is_st2()
       }
     )
 

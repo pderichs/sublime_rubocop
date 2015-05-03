@@ -93,7 +93,8 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'rvm_auto_ruby_path': rvm_path,
         'rbenv_path': rbenv_path,
         'on_windows': sublime.platform() == 'windows',
-        'rubocop_config_file': cfg_file
+        'rubocop_config_file': cfg_file,
+        'is_st2': sublime.version() < '3000'
       }
     )
     output = runner.run([path], ['--format', 'emacs']).splitlines()
