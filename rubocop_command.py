@@ -31,28 +31,45 @@ class RubocopCommand(sublime_plugin.TextCommand):
         'custom_rubocop_cmd': s.get('rubocop_command'),
         'rvm_auto_ruby_path': s.get('rvm_auto_ruby_path'),
         'rbenv_path': s.get('rbenv_path'),
-        'on_windows': (sublime.platform() == 'windows'),
-        'rubocop_config_file': cfg_file
+        'on_windows': self.on_windows(),
+        'rubocop_config_file': cfg_file,
+        'is_st2': self.is_st2()
       }
     )
 
+  def on_windows(self):
+    return sublime.platform() == 'windows'
+
+  def is_st2(self):
+    return int(sublime.version()) < 3000
+
+  def is_st3(self):
+    return int(sublime.version()) >= 3000
+
   def used_options(self):
     return []
+
+  def current_project_folder(self):
+    if self.is_st3():
+      project = sublime.active_window().project_data()
+      if not (project is None):
+        if 'folders' in project:
+          folders = project['folders']
+          if len(folders) > 0:
+            first_folder = folders[0]
+            if 'path' in first_folder:
+              return first_folder['path'] or ''
+    else:
+      folders = sublime.active_window().folders()
+      if (not (folders is None)) and (len(folders) > 0):
+        return folders[0]
+    return ''
 
   def run_rubocop_on(self, pathlist):
     if len(pathlist) == 0:
       return
 
-    working_dir = ''
-    project = sublime.active_window().project_data()
-    if not (project is None):
-      if 'folders' in project:
-        folders = project['folders']
-        if len(folders) > 0:
-          first_folder = folders[0]
-          if 'path' in first_folder:
-            working_dir = first_folder['path'] or ''
-    print("SublimeRubocop Working Dir: " + working_dir)
+    working_dir = self.current_project_folder()
 
     quoted_paths = []
     for path in pathlist:
@@ -62,9 +79,10 @@ class RubocopCommand(sublime_plugin.TextCommand):
       quoted_paths,
       self.used_options()
     )
+
     self.run_shell_command(rubocop_cmd, working_dir)
 
-  def run_shell_command(self, command, working_dir='.'):
+  def run_shell_command(self, command, working_dir):
     self.view.window().run_command('exec', {
       'cmd': command,
       'shell': True,
@@ -140,13 +158,13 @@ Do you want to continue?
       """)
 
   def write_to_file(self, f, content, view):
-    if sublime.version() < '3000':
+    if self.is_st2():
       f.write(content)
       return
     f.write(bytes(content, view.encoding()))
 
   def read_from_file(self, f, view):
-    if sublime.version() < '3000':
+    if self.is_st2():
       return f.read()
     return f.read().decode(view.encoding())
 
