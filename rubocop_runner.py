@@ -11,6 +11,7 @@ class RubocopRunner(object):
   def __init__(self, args):
     self.set_default_paths()
     self.on_windows = False
+    self.is_st2 = False
     self.custom_rubocop_cmd = ''
     self.rubocop_config_file = ''
     vars(self).update(args)
