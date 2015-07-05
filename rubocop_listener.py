@@ -107,7 +107,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
       self.set_marks_by_results(view, results)
 
   def do_in_file_check(self, view):
-    if not FileTools.is_ruby_file(view.file_name()):
+    if not FileTools.is_ruby_file(view):
       return
     mark = sublime.load_settings(SETTINGS_FILE).get('mark_issues_in_view')
     self.mark_issues(view, mark)
