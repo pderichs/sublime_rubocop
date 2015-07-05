@@ -13,10 +13,8 @@ class FileTools(object):
     return pipes.quote(path)
 
   @staticmethod
-  def is_ruby_file(path):
-    if not path:
+  def is_ruby_file(view):
+    if not view:
       return False
-    name, ext = os.path.splitext(path)
-    if ext == '.rb':
-      return True
-    return False
+    syntax_file = view.settings().get('syntax')
+    return syntax_file.endswith('Ruby.tmLanguage') or syntax_file.endswith('Ruby on Rails.tmLanguage')
