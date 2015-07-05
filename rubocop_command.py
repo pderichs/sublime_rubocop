@@ -207,9 +207,8 @@ class RubocopCheckOpenFilesCommand(RubocopCommand):
     files = []
     views = self.view.window().views()
     for vw in views:
-      file_path = vw.file_name()
-      if FileTools.is_ruby_file(file_path):
-        files.append(file_path)
+      if FileTools.is_ruby_file(vw):
+        files.append(vw.file_name())
     return files
 
 
