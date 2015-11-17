@@ -75,16 +75,19 @@ class RubocopEventListener(sublime_plugin.EventListener):
     view.add_regions(REGIONS_ID, lines, 'keyword', icon,
         REGIONS_OPTIONS_BITS)
 
-  def run_rubocop(self, path):
+  def run_rubocop(self, view):
     s = sublime.load_settings(SETTINGS_FILE)
-    use_rvm = s.get('check_for_rvm')
-    use_rbenv = s.get('check_for_rbenv')
-    cmd = s.get('rubocop_command')
-    rvm_path = s.get('rvm_auto_ruby_path')
-    rbenv_path = s.get('rbenv_path')
-    cfg_file = s.get('rubocop_config_file')
+
+    use_rvm = view.settings().get('check_for_rvm', s.get('check_for_rvm'))
+    use_rbenv = view.settings().get('check_for_rbenv', s.get('check_for_rbenv'))
+    cmd = view.settings().get('rubocop_command', s.get('rubocop_command'))
+    rvm_path = view.settings().get('rvm_auto_ruby_path', s.get('rvm_auto_ruby_path'))
+    rbenv_path = view.settings().get('rbenv_path', s.get('rbenv_path'))
+    cfg_file = view.settings().get('rubocop_config_file', s.get('rubocop_config_file'))
+
     if cfg_file:
       cfg_file = FileTools.quote(cfg_file)
+
     runner = RubocopRunner(
       {
         'use_rbenv': use_rbenv,
@@ -97,13 +100,14 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'is_st2': sublime.version() < '3000'
       }
     )
-    output = runner.run([path], ['--format', 'emacs']).splitlines()
+    output = runner.run([view.file_name()], ['--format', 'emacs']).splitlines()
+
     return output
 
   def mark_issues(self, view, mark):
     self.clear_marks(view)
     if mark:
-      results = self.run_rubocop(view.file_name())
+      results = self.run_rubocop(view)
       self.set_marks_by_results(view, results)
 
   def do_in_file_check(self, view):
