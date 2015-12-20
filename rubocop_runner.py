@@ -14,6 +14,7 @@ class RubocopRunner(object):
     self.is_st2 = False
     self.custom_rubocop_cmd = ''
     self.rubocop_config_file = ''
+    self.chdir = None
     vars(self).update(args)
 
   def set_default_paths(self):
@@ -46,7 +47,7 @@ class RubocopRunner(object):
       use_shell = True
     # TODO: Add "cwd" parameter (working dir)
     p = subprocess.Popen(call_list, shell=use_shell,
-      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.chdir)
     out, err = p.communicate()
     return out
 

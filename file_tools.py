@@ -25,6 +25,9 @@ class FileTools(object):
       return False
     syntax_file = view.settings().get('syntax')
 
+    if syntax_file == None:
+      return False
+
     for syntax in RUBY_SYNTAX_FILES:
       if syntax_file.endswith(syntax):
         return True
