@@ -45,7 +45,7 @@ class RubocopRunner(object):
     use_shell = False
     if self.on_windows:
       use_shell = True
-    # TODO: Add "cwd" parameter (working dir)
+
     p = subprocess.Popen(call_list, shell=use_shell,
       stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.chdir)
     out, err = p.communicate()
