@@ -1,11 +1,19 @@
 import os
 import pipes
+import sublime
 
-RUBY_SYNTAX_FILES = [
-  'Ruby.tmLanguage',
-  'Ruby on Rails.tmLanguage',
-  'RSpec.tmLanguage'
-]
+if sublime.version() >= '3000':
+  RUBY_SYNTAX_FILES = [
+    'Ruby.sublime-syntax',
+    'Ruby on Rails.sublime-syntax',
+    'RSpec.sublime-syntax'
+  ]
+else:
+  RUBY_SYNTAX_FILES = [
+    'Ruby.tmLanguage',
+    'Ruby on Rails.tmLanguage',
+    'RSpec.tmLanguage'
+  ]
 
 class FileTools(object):
   """Simple file operations"""
