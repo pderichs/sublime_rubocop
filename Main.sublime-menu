@@ -8,17 +8,20 @@
         "caption": "RuboCop",
         "children":
         [
-          { 
+          {
             "id": "rubocop_sublime_menu_single_file",
-            "command": "rubocop_check_single_file" 
+            "command": "rubocop_check_single_file",
+            "caption": "RuboCop Check Single File"
           },
-          { 
+          {
             "id": "rubocop_sublime_menu_project",
-            "command": "rubocop_check_project" 
+            "command": "rubocop_check_project",
+            "caption": "RuboCop Check Project"
           },
-          { 
+          {
             "id": "rubocop_sublime_menu_file_folder",
-            "command": "rubocop_check_file_folder" 
+            "command": "rubocop_check_file_folder",
+            "caption": "RuboCop Check File Folder"
           }
         ]
       }
