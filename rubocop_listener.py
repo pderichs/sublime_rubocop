@@ -78,6 +78,15 @@ class RubocopEventListener(sublime_plugin.EventListener):
   def run_rubocop(self, view):
     s = sublime.load_settings(SETTINGS_FILE)
 
+    rubocop_disable = view.settings().get(
+      'rubocop_disable',
+      s.get('rubocop_disable'),
+    )
+
+    if rubocop_disable:
+      return []
+
+
     use_rvm = view.settings().get('check_for_rvm', s.get('check_for_rvm'))
     use_rbenv = view.settings().get('check_for_rbenv', s.get('check_for_rbenv'))
     cmd = view.settings().get('rubocop_command', s.get('rubocop_command'))
