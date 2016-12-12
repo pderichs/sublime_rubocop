@@ -89,7 +89,7 @@ class RubocopCommand(sublime_plugin.TextCommand):
       'cmd': command,
       'shell': True,
       'working_dir': working_dir,
-      'file_regex': r"^(.*):(\d*):\d*: .: .*$",
+      'file_regex': r"^(.*):(\d*):(\d*): (.: .*$)"
     })
 
 # --------- General rubocop commands -------------
