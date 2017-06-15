@@ -32,6 +32,16 @@ Additionally you can run RuboCop from the ST menu in many ways. For example you 
 
 You can also run the RuboCop auto correction for the current file from the Sublime Text menu.
 
+## Key Bindings
+Add to `Preferences -> Key Bindings`:
+```
+[
+  { "keys": ["ctrl+alt+c"], "command": "rubocop_check_single_file" },
+  { "keys": ["ctrl+shift+c"], "command": "rubocop_check_project" },
+  { "keys": ["ctrl+shift+v"], "command": "rubocop_check_file_folder" }
+]
+```
+
 ### ST2
 
 Due to performance issues the plugin behaves a bit different under ST2. It will run RuboCop only when you **save** files. If you experience any performance issues when saving ruby files caused by that plugin, just disable the functionality in the settings (see ```mark_issues_in_view```).
