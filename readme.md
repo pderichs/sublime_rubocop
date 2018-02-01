@@ -14,7 +14,18 @@ Please make sure `rubocop` is installed:
 
 ### Recommended:
 
-Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/package_control).
+Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/package_control). 
+
+<details>
+  <summary> Detailed Package Control Installation Instructions </summary>
+
+1. Type in CTRL + SHIFT + P
+2. Click on "Package Control: Install Package"
+3. Search for "RuboCop"
+4. Once you've found it - click on it and install it!
+  
+</details>
+
 
 ### Manual:
 
