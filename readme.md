@@ -12,11 +12,11 @@ Please make sure `rubocop` is installed:
 
 `gem install rubocop`
 
-### Recommended:
+### Recommended
 
 Install Sublime RuboCop via [Package Control](http://wbond.net/sublime_packages/package_control).
 
-### Manual:
+### Manual
 
 1. Navigate to the Sublime Text Packages folder (You can find the location of the Packages folder [here](http://docs.sublimetext.info/en/latest/basic_concepts.html#the-data-directory)).
 
@@ -38,7 +38,18 @@ Due to performance issues the plugin behaves a bit different under ST2. It will 
 
 ## Environment
 
-By default this plugin uses [rvm](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings. The plugin uses default paths to run rvm or rbenv but you can customize these paths in the settings.
+By default this plugin uses [rvm](https://rvm.io/) to run RuboCop, but you can switch to [rbenv](https://github.com/sstephenson/rbenv) or provide your own command line in the settings. The plugin uses default paths to run rvm or rbenv but you can customize these paths in the settings. 
+
+To use rbenv, for example, go to _Preferences > Package Settings > Rubocop > Settings-User_ and add the following:
+
+```
+{
+  “check_for_rvm”: false,
+  “check_for_rbenv”: true,
+  // In case you need a custom rbenv path
+  “rbenv_path”: “~/.rbenv/bin/rbenv”,
+}
+```
 
 ## ToDo
 
