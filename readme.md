@@ -44,10 +44,10 @@ To use rbenv, for example, go to _Preferences > Package Settings > Rubocop > Set
 
 ```
 {
-  “check_for_rvm”: false,
-  “check_for_rbenv”: true,
+  "check_for_rvm": false,
+  "check_for_rbenv": true,
   // In case you need a custom rbenv path
-  “rbenv_path”: “~/.rbenv/bin/rbenv”,
+  "rbenv_path": "~/.rbenv/bin/rbenv",
 }
 ```
 
