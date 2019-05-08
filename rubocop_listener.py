@@ -111,7 +111,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'is_st2': sublime.version() < '3000'
       }
     )
-    output = runner.run([view.file_name()], ['--format', 'emacs']).splitlines()
+    output = runner.run([view.file_name()], ['--format', 'emacs', '--force-exclusion']).splitlines()
 
     return output
 
