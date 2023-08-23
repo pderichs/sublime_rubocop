@@ -2,6 +2,7 @@ import os
 import subprocess
 import shlex
 import locale
+import sublime
 
 RVM_DEFAULT_PATH = '~/.rvm/bin/rvm-auto-ruby'
 RBENV_DEFAULT_PATH = '~/.rbenv/bin/rbenv'
@@ -40,15 +41,34 @@ class RubocopRunner(object):
       return True
     return False
 
+  # 
+  # RuboCop exits with the following status codes:
+  #  0 if no offenses are found or if the severity of all offenses are less
+  #    than --fail-level. (By default, if you use --autocorrect, offenses which are
+  #    autocorrected do not cause RuboCop to fail.)
+  #  1 if one or more offenses equal or greater to --fail-level are found. 
+  #    (By default, this is any offense which is not autocorrected.)
+  #  2 if RuboCop terminates abnormally due to invalid configuration, invalid CLI 
+  #    options, or an internal error.
+  #
+  @staticmethod
+  def is_err_unespected(returncode):
+    returncode not in [0, 1]
+
   def run(self, pathlist, options=[]):
     call_list = self.command_list(pathlist, options)
     use_shell = False
     if self.on_windows:
       use_shell = True
-
+    print("RubocopRunner executing: {} \n in folder: {} \n shell: {}".format(call_list, self.chdir, use_shell))
     p = subprocess.Popen(call_list, shell=use_shell,
       stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.chdir)
     out, err = p.communicate()
+    
+    if RubocopRunner.is_err_unespected(p.returncode):
+      print("RubocopRunner out: ", out)
+      print("RubocopRunner err: ", err)
+      sublime.error_message("RubocopRunner returned error code: {}".format(p.returncode));
     return out
 
   def command_string(self, pathlist, options=[]):
