@@ -1,3 +1,6 @@
+> [!NOTE]
+> Searching for a new maintainer. Please see https://github.com/pderichs/sublime_rubocop/issues/71 for more information.
+
 # Sublime RuboCop
 
 A [Sublime Text](http://www.sublimetext.com/) plugin that runs [RuboCop](https://github.com/bbatsov/rubocop) on your Ruby files in the editor. It will mark issues right inside the view but it can also be called as a "compiler" from the ST menu.
