@@ -8,11 +8,13 @@ if sublime.version() >= '3000':
   from RuboCop.rubocop_runner import RubocopRunner
   from RuboCop.constants import *
   from RuboCop.rubocop_listener import RubocopEventListener
+  from RuboCop.rubocop_plugin import RubocopPlugin
 else:
   from file_tools import FileTools
   from rubocop_runner import RubocopRunner
   from constants import *
   from rubocop_listener import RubocopEventListener
+  from rubocop_plugin import RubocopPlugin
 
 # Base class for all RuboCop commands
 class RubocopCommand(sublime_plugin.TextCommand):
@@ -31,47 +33,21 @@ class RubocopCommand(sublime_plugin.TextCommand):
         'custom_rubocop_cmd': s.get('rubocop_command'),
         'rvm_auto_ruby_path': s.get('rvm_auto_ruby_path'),
         'rbenv_path': s.get('rbenv_path'),
-        'on_windows': self.on_windows(),
+        'on_windows': RubocopPlugin.on_windows(),
         'rubocop_config_file': cfg_file,
-        'is_st2': self.is_st2()
+        'is_st2': RubocopPlugin.is_st2(),
+        'chdir': RubocopPlugin.current_project_folder()
       }
     )
 
-  def on_windows(self):
-    return sublime.platform() == 'windows'
-
-  def is_st2(self):
-    return int(sublime.version()) < 3000
-
-  def is_st3(self):
-    return int(sublime.version()) >= 3000
-
   def used_options(self):
     return []
-
-  def current_project_folder(self):
-    if self.is_st3():
-      project = sublime.active_window().project_data()
-      project_base_path = os.path.dirname(sublime.active_window().project_file_name() or '')
-      if not (project is None):
-        if 'folders' in project:
-          folders = project['folders']
-          if len(folders) > 0:
-            first_folder = folders[0]
-            if 'path' in first_folder:
-              path = first_folder['path']
-              return (path if os.path.isabs(path) else os.path.join(project_base_path, path)) or ''
-    else:
-      folders = sublime.active_window().folders()
-      if (not (folders is None)) and (len(folders) > 0):
-        return folders[0]
-    return ''
 
   def run_rubocop_on(self, pathlist):
     if len(pathlist) == 0:
       return
 
-    working_dir = self.current_project_folder()
+    working_dir = RubocopPlugin.current_project_folder()
 
     quoted_paths = []
     for path in pathlist:
@@ -115,7 +91,6 @@ class RubocopAutoCorrectCommand(RubocopCommand):
     cancel_op = self.user_wants_to_cancel()
     if cancel_op:
       return
-
     view = self.view
     path = view.file_name()
     quoted_file_path = FileTools.quote(path)
@@ -135,9 +110,7 @@ class RubocopAutoCorrectCommand(RubocopCommand):
       view.run_command('save')
 
     RubocopEventListener.instance().clear_marks(view)
-
-    quoted_file_path = FileTools.quote(path)
-
+    
     # Run rubocop with auto-correction
     self.runner.run([quoted_file_path], ['-a'])
 
@@ -160,13 +133,13 @@ Do you want to continue?
       """)
 
   def write_to_file(self, f, content, view):
-    if self.is_st2():
+    if RubocopPlugin.is_st2():
       f.write(content)
       return
     f.write(bytes(content, view.encoding()))
 
   def read_from_file(self, f, view):
-    if self.is_st2():
+    if RubocopPlugin.is_st2():
       return f.read()
     return f.read().decode(view.encoding())
 

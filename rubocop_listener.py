@@ -8,10 +8,12 @@ if sublime.version() >= '3000':
   from RuboCop.file_tools import FileTools
   from RuboCop.rubocop_runner import RubocopRunner
   from RuboCop.constants import *
+  from RuboCop.rubocop_plugin import RubocopPlugin
 else:
   from file_tools import FileTools
   from rubocop_runner import RubocopRunner
   from constants import *
+  from rubocop_plugin import RubocopPlugin
 
 # Event listener to provide on the fly checks when saving a ruby file.
 class RubocopEventListener(sublime_plugin.EventListener):
@@ -93,7 +95,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
     rvm_path = view.settings().get('rvm_auto_ruby_path', s.get('rvm_auto_ruby_path'))
     rbenv_path = view.settings().get('rbenv_path', s.get('rbenv_path'))
     cfg_file = view.settings().get('rubocop_config_file', s.get('rubocop_config_file'))
-    chdir = view.settings().get('rubocop_chdir', s.get('rubocop_chdir'))
+    chdir = view.settings().get('rubocop_chdir', s.get('rubocop_chdir')) or RubocopPlugin.current_project_folder()
 
     if cfg_file:
       cfg_file = FileTools.quote(cfg_file)
@@ -105,7 +107,7 @@ class RubocopEventListener(sublime_plugin.EventListener):
         'custom_rubocop_cmd': cmd,
         'rvm_auto_ruby_path': rvm_path,
         'rbenv_path': rbenv_path,
-        'on_windows': sublime.platform() == 'windows',
+        'on_windows': RubocopPlugin.on_windows(),
         'rubocop_config_file': cfg_file,
         'chdir': chdir,
         'is_st2': sublime.version() < '3000'
